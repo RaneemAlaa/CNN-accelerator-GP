@@ -1,17 +1,18 @@
 module PUs #(
   parameter data_width  = 16,
             weight_size = 25,
-            address_num = 3,
+            address_num = 5,
             reg_num     = 20
 ) (
-  input logic clk,nrst, wr_ctrl_g , r_ctrl_g, wr_ctrl_r , r_ctrl_r, wr_ctrl_n , r_ctrl_n,
-  input logic [address_num-1:0] adrs_in1, adrs_in2,
-  input logic [data_width-1:0] new1, new2,                       //data comes from AXI
-  input logic [data_width-1:0] neighbour_in [reg_num-1:0],       //data from neighbour PU
-  output logic [data_width-1:0] neighbour_out [reg_num-1:0],     //data to neighbour PU
-  output logic [data_width-1:0] out [weight_size-1:0]
+  input logic clk,nrst,
+  input logic  [address_num-1:0] adrs_in1, adrs_in2,
+  input logic  [data_width-1:0]  new1, new2,                       //data comes from AXI
+  input logic  [data_width-1:0]  neighbour_in [reg_num-1:0],       //data from neighbour PU
+  output logic [data_width-1:0]  neighbour_out [reg_num-1:0],      //data to neighbour PU
+  output logic [data_width-1:0]  out [weight_size-1:0]
 );
 
+logic wr_ctrl_g, r_ctrl_g, wr_ctrl_r, r_ctrl_r, wr_ctrl_n, r_ctrl_n;
 logic [data_width-1:0] out_g [4:0];
 logic [data_width-1:0] in_r [reg_num-1:0];
 logic [data_width-1:0] out_n [reg_num-1:0];
@@ -19,7 +20,7 @@ logic [data_width-1:0] out_r [reg_num-1:0];
 //assign neighbour_out = {out[1:4], out[9:12], out[17:20], out[25:28], out[33:36]};
 
   //new reg
-  regfile2in #(.reg_num(5), .address_num(3)) g (.clk(clk),
+  regfile2in #(.reg_num(5)) g (.clk(clk),
                                                 .nrst(nrst),
                                                 .wr_ctrl(wr_ctrl_g),
                                                 .r_ctrl(r_ctrl_g),
