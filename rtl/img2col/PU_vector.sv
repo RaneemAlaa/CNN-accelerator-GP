@@ -6,9 +6,9 @@ module pus_vector#(
             reg_num     = 20
 )(
   input logic clk,nrst,
-  input logic [data_width-1:0] new1, new2,                            //data comes from AXI
-  input logic [address_num-1:0] adrs_in1, adrs_in2,
-  output logic [data_width-1:0] out [weight_size-1:0]
+  input logic  [data_width-1:0]  new1, new2,                            //data comes from AXI
+  input logic  [address_num-1:0] adrs_in1, adrs_in2,
+  output logic [data_width-1:0]  out [weight_size-1:0]
 );
 
  logic [data_width-1:0] neighbour_out [row-2:0][reg_num-1:0];        //out from pu[x] & in to pu[x+1]
@@ -22,7 +22,7 @@ module pus_vector#(
         .new1(new1),
         .new2(new2),
         .neighbour_out(neighbour_out[0]),
-	.out(out)
+	      .out(out)
     );
 
  //PUs

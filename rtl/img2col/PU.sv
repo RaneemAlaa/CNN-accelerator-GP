@@ -15,7 +15,8 @@ logic wr_ctrl_g, r_ctrl_g, wr_ctrl_r, r_ctrl_r;
 logic [data_width-1:0] out_g [24:0];
 logic [data_width-1:0] in_r [reg_num-1:0];
 logic [data_width-1:0] out_r [reg_num-1:0];
-//assign neighbour_out = {o ut[1:4], out[9:12], out[17:20], out[25:28], out[33:36]};
+logic neightor_out_flag;
+
   //new reg
   regfile2in #(.reg_num(25)) g (.clk(clk),
                                 .nrst(nrst),
@@ -36,5 +37,23 @@ logic [data_width-1:0] out_r [reg_num-1:0];
   );
 
   //ctrl unit
+	PU_control ctrl (
+    .out_g (out_g),
+    .in_r (in_r),
+    .out_r (out_r),
+    .clk(clk),
+    .nrst(nrst),
+    .start(1'b1),
+    .round(1'b1),
+    .adrs_in1(adrs_in1), 
+    .adrs_in2(adrs_in2),
+    .wr_ctrl_g (wr_ctrl_g),
+    .r_ctrl_g(r_ctrl_g),
+    .wr_ctrl_r(wr_ctrl_r),
+    .r_ctrl_r(r_ctrl_r),
+    .neightor_out_flag(neightor_out_flag), 
+    .neighbour_out(neighbour_out),
+    .out(out) 
+  );
 
 endmodule
