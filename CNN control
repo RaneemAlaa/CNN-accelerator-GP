@@ -7,9 +7,9 @@ module control (
   enum logic [3:0]{ idle  = 4'b0000,
                   buffer  = 4'b0001,
                   conv    = 4'b0010,
-				          pooling = 4'b0100,
-				          FC      = 4'b1000,
-				          OUT     = 4'b1001} next_state,current_state;
+		  pooling = 4'b0100,
+	          FC      = 4'b1000,
+		  OUT     = 4'b1001} next_state,current_state;
 				  
   logic [3:0] next_count,current_count;
 				  
