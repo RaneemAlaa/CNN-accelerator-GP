@@ -33,51 +33,51 @@ module control (
 		unique case(current_state) 
 			idle: unique case(op_code_i[9:7])
 			        3'b000:next_state = current_state; 
-              3'b010:next_state = conv;
-              3'b011:next_state = pooling;
-              3'b100:next_state = FC;
-              3'b101:next_state =buffer;	
-				    endcase
+           			3'b010:next_state = conv;
+              			3'b011:next_state = pooling;
+              			3'b100:next_state = FC;
+              			3'b101:next_state =buffer;	
+		endcase
 
 			buffer:
-      begin
-        pu_en     = 0;
-        weight_en = 1;
+      			   begin
+       				  pu_en = 0;
+        			  weight_en = 1;
 				if(next_count<op_code_i[4:0])
-				  begin
-			      next_count = current_count + 1;
-					  next_state = buffer;
+				   begin
+			            next_count = current_count + 1;
+			            next_state = buffer;
 				  end
 				else 
 				  begin 
-					  pu_en      = 1;
-            weight_en  = 0;
-            next_count = 0;	
-            next_state = idle;				  
+				    pu_en = 1;
+            			    weight_en = 0;
+           		            next_count = 0;	
+            			    next_state = idle;				  
 					end        
-      end     
+      			   end     
 
 			conv: unique case(op_code_i[6])
 			        1'b1:next_state = pooling;
-				      1'b0:next_state = OUT;
+				1'b0:next_state = OUT;
 			      endcase  
 
-      pooling: if(conv_finish==1)
-               begin 
+      			pooling: if(conv_finish==1)
+               			begin 
 			          unique case(op_code_i[5])
 			            1'b1:next_state = FC;
-				          1'b0:next_state = OUT;
+				    1'b0:next_state = OUT;
 			          endcase  
-               end
+               			end
 
 			FC: if(pooling_finish) 
 			    begin 
-            next_state = OUT;
-          end 
+            		        next_state = OUT;
+         		    end 
 			OUT:
-      begin 
-        next_state = idle;
-      end    		  
+      			begin 
+        		        next_state = idle;
+      			end    		  
 		  endcase
 	end			  
 
