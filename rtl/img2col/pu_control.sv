@@ -38,32 +38,32 @@ end
      case(current_state)
       
        idle: 
-		begin 
-             wr_ctrl_r = 0;
-              r_ctrl_r <= 0;
-              wr_ctrl_g <= 0;
-              r_ctrl_g <= 0;
-              neightor_out_flag<=0;
-            next_state <= start? write_g : idle;
-		end 
+		    begin 
+              wr_ctrl_r = 0;
+              r_ctrl_r  = 0;
+              wr_ctrl_g = 0;
+              r_ctrl_g  = 0;
+              neightor_out_flag = 0;
+              next_state = start? write_g : idle;
+		    end 
        write_g: 
-		begin
-              wr_ctrl_r <= 0;
-              r_ctrl_r <= 0;
-              wr_ctrl_g <= 1;
-              r_ctrl_g <= 0;
-              neightor_out_flag<=0;
-              next_state <= (adrs_in1==5'd24)? read_g : write_g;
-			end 
+		    begin
+              wr_ctrl_r = 0;
+              r_ctrl_r  = 0;
+              wr_ctrl_g = 1;
+              r_ctrl_g  = 0;
+              neightor_out_flag = 0;
+              next_state = (adrs_in1==5'd24)? read_g : write_g;
+			  end 
        read_g:
-		begin 
-              wr_ctrl_r <= 0;
-              r_ctrl_r <= 1;
-              wr_ctrl_g <= 0;
-              r_ctrl_g <= 1;
-              neightor_out_flag<=1;
-              next_state <= write_r;
-              if(round==1) 
+		    begin 
+              wr_ctrl_r = 0;
+              r_ctrl_r  = 1;
+              wr_ctrl_g = 0;
+              r_ctrl_g  = 1;
+              neightor_out_flag = 1;
+              next_state = write_r;
+              if(round == 1) 
                begin
                 assign neighbour_out = {out_g[4:1], out_g[9:6], out_g[14:11], out_g[19:16], out_g[24:21]}; //kant 14
                 assign out = out_g;
@@ -76,13 +76,13 @@ end
                end
           end 
        write_r:
-			begin 
-              wr_ctrl_r <= 1;
-              r_ctrl_r <= 0;
-              wr_ctrl_g <=0 ;
-              r_ctrl_g <= 1;
-              neightor_out_flag<=0;
-              next_state <= write_g;
+			  begin 
+              wr_ctrl_r = 1;
+              r_ctrl_r  = 0;
+              wr_ctrl_g =0 ;
+              r_ctrl_g  = 1;
+              neightor_out_flag = 0;
+              next_state = write_g;
               if(round==1)
                 assign in_r = out_g[24:5];
               else
@@ -92,3 +92,4 @@ end
    end
 
 endmodule 
+// neightor out flag ????
