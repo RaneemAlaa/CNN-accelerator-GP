@@ -7,9 +7,9 @@ module PUs_control#(
     input logic [data_width-1:0] in_r [reg_num-1:0],
     input logic [data_width-1:0] out_r [reg_num-1:0],
     input logic [data_width-1:0] out_n [reg_num-1:0],
-    input logic clk,nrst,start,round,neightor_in_flag,
+    input logic clk,nrst,start,round,neighbour_in_flag,
     input logic [address_num-1:0] adrs_in1, adrs_in2,
-    output logic wr_ctrl_g , r_ctrl_g, wr_ctrl_r,r_ctrl_n, wr_ctrl_n , r_ctrl_r,neightor_out_flag , 
+    output logic wr_ctrl_g , r_ctrl_g, wr_ctrl_r,r_ctrl_n, wr_ctrl_n , r_ctrl_r, neighbour_out_flag, 
     output logic [data_width-1:0] neighbour_out [reg_num-1:0],
     output logic [data_width-1:0] out [weight_size-1:0] 
 );
@@ -43,18 +43,18 @@ end
               r_ctrl_r = 0;
               wr_ctrl_g = 0;
               r_ctrl_g = 0;
-              neightor_out_flag = 0;
+               neighbour_out_flag= 0;
               next_state = start? write_g : idle;
 		    end 
        write_g: 
 		    begin
-              wr_ctrl_n = neightor_in_flag;
+              wr_ctrl_n = neighbour_in_flag;
               r_ctrl_n  = 0;
               wr_ctrl_r = 0;
               r_ctrl_r  = 0;
               wr_ctrl_g = 1;
               r_ctrl_g  = 0;
-              neightor_out_flag = 0;
+               neighbour_out_flag= 0;
               next_state = (adrs_in1==3'd4)? read_g : write_g;
 			  end 
        read_g:
@@ -65,7 +65,7 @@ end
               r_ctrl_r  = 1;
               wr_ctrl_g = 0;
               r_ctrl_g  = 1;
-              neightor_out_flag = 1;
+               neighbour_out_flag= 1;
               next_state = write_r;
               if(round==1) 
                begin
@@ -87,7 +87,7 @@ end
               r_ctrl_r = 0;
               wr_ctrl_g =0 ;
               r_ctrl_g = 1;
-              neightor_out_flag =0;
+               neighbour_out_flag=0;
               next_state = write_g;
               if(round==1)
                 assign in_r = {out_n[4:7],out_g[1],out_n[8:11],out_g[2],out_n[12:15],out_g[3],out_n[16:19],out_g[4]};

@@ -4,12 +4,13 @@ module PUs #(
             address_num = 5,
             reg_num     = 20
 ) (
-  input logic clk,nrst,
+  input logic clk, nrst, round, start, neighbour_in_flag,
   input logic  [address_num-1:0] adrs_in1, adrs_in2,
   input logic  [data_width-1:0]  new1, new2,                       //data comes from AXI
   input logic  [data_width-1:0]  neighbour_in [reg_num-1:0],       //data from neighbour PU
   output logic [data_width-1:0]  neighbour_out [reg_num-1:0],      //data to neighbour PU
-  output logic [data_width-1:0]  out [weight_size-1:0]
+  output logic [data_width-1:0]  out [weight_size-1:0],
+  output logic neighbour_out_flag
 );
 
 logic wr_ctrl_g, r_ctrl_g, wr_ctrl_r, r_ctrl_r, wr_ctrl_n, r_ctrl_n;
@@ -17,7 +18,7 @@ logic [data_width-1:0] out_g [4:0];
 logic [data_width-1:0] in_r [reg_num-1:0];
 logic [data_width-1:0] out_n [reg_num-1:0];
 logic [data_width-1:0] out_r [reg_num-1:0];
-//assign neighbour_out = {out[1:4], out[9:12], out[17:20], out[25:28], out[33:36]};
+
 
   //new reg
   regfile2in #(.reg_num(5)) g (.clk(clk),
@@ -48,4 +49,26 @@ logic [data_width-1:0] out_r [reg_num-1:0];
   );
 
   //ctrl unit
+  	PUs_control ctrl (
+    .out_g (out_g),
+    .in_r (in_r),
+    .out_r (out_r),
+    .out_n(out_n),
+    .clk(clk),
+    .nrst(nrst),
+    .start(start),
+    .round(round),
+    .neighbour_in_flag(neighbour_in_flag),
+    .adrs_in1(adrs_in1), 
+    .adrs_in2(adrs_in2),
+    .wr_ctrl_g (wr_ctrl_g),
+    .r_ctrl_g(r_ctrl_g),
+    .wr_ctrl_r(wr_ctrl_r),
+    .r_ctrl_r(r_ctrl_r),
+    .wr_ctrl_n(wr_ctrl_n),
+    .r_ctrl_n(r_ctrl_n),
+    .neighbour_out_flag(neightor_out_flag), 
+    .neighbour_out(neighbour_out),
+    .out(out) 
+  );
 endmodule

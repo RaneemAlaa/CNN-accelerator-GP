@@ -10,7 +10,7 @@ module PU_control#(
     input logic start, 
     input logic round,
     input logic [address_num-1:0] adrs_in1, adrs_in2,
-    output logic wr_ctrl_g , r_ctrl_g, wr_ctrl_r , r_ctrl_r,neightor_out_flag , 
+    output logic wr_ctrl_g , r_ctrl_g, wr_ctrl_r , r_ctrl_r, neighbour_out_flag , 
     output logic [data_width-1:0] neighbour_out [reg_num-1:0],
     output logic [data_width-1:0] out [weight_size-1:0] 
 );
@@ -43,7 +43,7 @@ end
               r_ctrl_r  = 0;
               wr_ctrl_g = 0;
               r_ctrl_g  = 0;
-              neightor_out_flag = 0;
+               neighbour_out_flag = 0;
               next_state = start? write_g : idle;
 		    end 
        write_g: 
@@ -52,7 +52,7 @@ end
               r_ctrl_r  = 0;
               wr_ctrl_g = 1;
               r_ctrl_g  = 0;
-              neightor_out_flag = 0;
+               neighbour_out_flag = 0;
               next_state = (adrs_in1==5'd24)? read_g : write_g;
 			  end 
        read_g:
@@ -61,7 +61,7 @@ end
               r_ctrl_r  = 1;
               wr_ctrl_g = 0;
               r_ctrl_g  = 1;
-              neightor_out_flag = 1;
+               neighbour_out_flag = 1;
               next_state = write_r;
               if(round == 1) 
                begin
@@ -81,7 +81,7 @@ end
               r_ctrl_r  = 0;
               wr_ctrl_g =0 ;
               r_ctrl_g  = 1;
-              neightor_out_flag = 0;
+               neighbour_out_flag = 0;
               next_state = write_g;
               if(round==1)
                 assign in_r = out_g[24:5];
