@@ -17,6 +17,7 @@ logic [5:0] round,PU1_add,PU_No,row_No;
       .clk(clk),
       .nrst(nrst),
       .start(start),
+      .PU_No(PU_No),
       .new1(new1),
       .new2(new2),                            //data comes from AXI
       .adrs_in1(adrs_in1),

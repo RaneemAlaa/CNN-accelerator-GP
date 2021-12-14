@@ -7,9 +7,10 @@ module PUs_control#(
     input logic [data_width-1:0] in_r [reg_num-1:0],
     input logic [data_width-1:0] out_r [reg_num-1:0],
     input logic [data_width-1:0] out_n [reg_num-1:0],
-    input logic clk,nrst,start,round,neighbour_in_flag,
-    input logic [address_num-1:0] adrs_in1, adrs_in2,
-    output logic wr_ctrl_g , r_ctrl_g, wr_ctrl_r,r_ctrl_n, wr_ctrl_n , r_ctrl_r, neighbour_out_flag, 
+    input logic clk,nrst,start,neighbour_in_flag,
+    input logic [5:0] round,
+    input logic [address_num-1:0] adrs_in1, adrs_in2,wr_ctrl_g ,
+    output logic  r_ctrl_g, wr_ctrl_r,r_ctrl_n, wr_ctrl_n , r_ctrl_r, neighbour_out_flag, 
     output logic [data_width-1:0] neighbour_out [reg_num-1:0],
     output logic [data_width-1:0] out [weight_size-1:0] 
 );
@@ -41,7 +42,6 @@ end
               r_ctrl_n = 0;  
               wr_ctrl_r = 0;
               r_ctrl_r = 0;
-              wr_ctrl_g = 0;
               r_ctrl_g = 0;
                neighbour_out_flag= 0;
               next_state = start? write_g : idle;
@@ -52,10 +52,9 @@ end
               r_ctrl_n  = 0;
               wr_ctrl_r = 0;
               r_ctrl_r  = 0;
-              wr_ctrl_g = 1;
               r_ctrl_g  = 0;
                neighbour_out_flag= 0;
-              next_state = (adrs_in1==3'd4)? read_g : write_g;
+              next_state = ((adrs_in1==3'd4)&&wr_ctrl_g)? read_g : write_g;
 			  end 
        read_g:
 		begin 
@@ -63,7 +62,6 @@ end
               r_ctrl_n  = 1;
               wr_ctrl_r = 0;
               r_ctrl_r  = 1;
-              wr_ctrl_g = 0;
               r_ctrl_g  = 1;
                neighbour_out_flag= 1;
               next_state = write_r;
@@ -85,7 +83,6 @@ end
               r_ctrl_n = 0;
               wr_ctrl_r = 1;
               r_ctrl_r = 0;
-              wr_ctrl_g =0 ;
               r_ctrl_g = 1;
                neighbour_out_flag=0;
               next_state = write_g;

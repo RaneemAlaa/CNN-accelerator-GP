@@ -6,6 +6,7 @@ module pus_vector#(
             reg_num     = 20
 )(
   input logic  clk,nrst,
+  input logic  [5:0] PU_No,
   input logic  [row-1:0] start, round,
   input logic  [data_width-1:0]  new1, new2,                            //data comes from AXI
   input logic  [address_num-1:0] adrs_in1, adrs_in2,
@@ -15,13 +16,16 @@ module pus_vector#(
  logic [data_width-1:0] neighbour_out [row-2:0][reg_num-1:0];        //out from pu[x] & in to pu[x+1]
  logic  neighbour_out_flag [row-2:0];
  logic  neighbour_in_flag  [row-2:0];
+ logic  wr_ctrl_g [row-2:0];
  
  //PU1
+ assign wr_ctrl_g[0] = (PU_No==0)?1:0;
   PU1 pu1(
         .clk(clk),
         .nrst(nrst),
         .start(start[0]),
         .round(round[0]),
+        .wr_ctrl_g(wr_ctrl_g[0]),
         .adrs_in1(adrs_in1),
         .adrs_in2(adrs_in2),
         .new1(new1),
@@ -35,12 +39,14 @@ module pus_vector#(
   genvar i;
   generate
     for (i = 1; i < row; i = i + 1) 
-    begin:PU 
+    begin:PU
+      assign    wr_ctrl_g[i]= (PU_No==i)?1:0;
       PUs pu(
         .clk(clk),
         .nrst(nrst),
         .start(start[i]),
         .round(round[i]),
+        .wr_ctrl_g(wr_ctrl_g[i]),
         .adrs_in1(adrs_in1),
         .adrs_in2(adrs_in2),
         .new1(new1),
