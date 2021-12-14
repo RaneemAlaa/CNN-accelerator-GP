@@ -103,9 +103,9 @@ logic [5:0] next_PU1_add, next_PU_No, next_row_No, next_round ;
           else 
           begin
             next_PU_No = next_PU_No + 1;
-            if( next_round == 4'd04)
+            if( next_round == 4'd27)
             begin
-            next_state = Working;
+            next_state = Idle;
             next_round = current_round;
             end
             else
