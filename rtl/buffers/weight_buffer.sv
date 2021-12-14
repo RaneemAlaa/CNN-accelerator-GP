@@ -1,7 +1,7 @@
 module weight_buffer #(
   parameter data_width = 16
 ) (
-  input  logic  clk, nrst, weight_en, out_en,
+  input  logic  clk, nrst, fifo_en, out_en,
   input  logic  [31:0] data_in,           //from AXI
   output logic  [data_width-1:0] data_out,
   output logic out_vld
@@ -21,12 +21,12 @@ always_ff @(posedge clk, negedge nrst) begin
   else 
   begin
     bit_count <= next_bit_count;
-    if (weight_en)
+    if (fifo_en)
     begin
       store[ in_idx +: 32] <= data_in;      //store 2 elements
       in_idx <= (in_idx + 32) % 224;
     end
-    out_vld <= (bit_count >= 16 || weight_en);
+    out_vld <= (bit_count >= 16 || fifo_en);
     if (out_vld)
     begin
       out_idx <= (out_idx + 16) % 224;
@@ -36,11 +36,11 @@ end
 
 always_comb begin
   next_bit_count = bit_count;
-  if (weight_en) 
+  if (fifo_en) 
   begin
     next_bit_count += 32;
   end
-  if (bit_count >= 16 || weight_en)
+  if (bit_count >= 16 || fifo_en)
   begin
     next_bit_count -= 16;
   end
