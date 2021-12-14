@@ -2,8 +2,8 @@ module max_avg_pooling
   #(  parameter data_width = 8)
    (   
        input clk,nrst,start,en,
-       input [datawidth-1:0]sys_out,pooling_out,
-       output [datawidth-1:0] out);
+       input [data_width-1:0]sys_out,pooling_out,
+       output [data_width-1:0] out);
 
     logic [datawidth-1:0] x,z;
 
