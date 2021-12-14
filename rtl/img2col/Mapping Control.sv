@@ -84,28 +84,37 @@ logic [5:0] next_PU1_add, next_PU_No, next_row_No, next_round ;
         end
       end
 
-Working:
-begin
-           next_row_No =4'd04;
-        
-           if(next_PU1_add==5'd04 )begin
-           next_PU_No=next_PU_No+1;
-               if(next_PU_No==5'd27)
-               begin
-               next_round=next_round+1;
-               next_PU_No=0;
-               next_PU1_add=0;
-               if(next_round==27)
-               next_state=Idle;
-               else
-               next_state=current_state  ;    
-               end  
-           end 
+    Working:
+     begin
+           if( next_PU1_add < 6'd04 )
+             begin
+              next_PU1_add = next_PU1_add + 1;
+              next_state = current_state;
+             end
            else
-           next_PU1_add=next_PU1_add+1; 
-	   next_state=current_state; // ***
-
-end
+            begin
+          if( next_PU_No == 5'd27)
+            begin
+              next_PU_No   = 0;
+              next_PU1_add = 0;
+              next_round  = next_round + 1;
+		          next_state=current_state;
+            end
+          else 
+          begin
+            next_PU_No = next_PU_No + 1;
+            if( next_round == 4'd04)
+            begin
+            next_state = Working;
+            next_round = current_round;
+            end
+            else
+            begin
+              next_state = current_state;
+            end
+          end
+        end
+      end
 
 endcase 
 end
