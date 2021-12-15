@@ -5,7 +5,7 @@ module pooling_top
        input [data_width-1:0]sys_out,pooling_out,
        output [data_width-1:0] out);
 
-    logic [datawidth-1:0] x,z;
+  logic [data_width-1:0] x,z;
 
     assign x =(get_this_from_control1)?sys_out:out;
 
