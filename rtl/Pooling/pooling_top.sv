@@ -1,4 +1,4 @@
-module max_avg_pooling
+module pooling_top
   #(  parameter data_width = 8)
    (   
        input clk,nrst,start,en,
