@@ -1,5 +1,5 @@
 module pooling_top
-  #(  parameter data_width = 8)
+  #(  parameter data_width = 16)
    (   
        input clk,nrst,start,en,
        input [data_width-1:0]sys_out,pooling_out,
