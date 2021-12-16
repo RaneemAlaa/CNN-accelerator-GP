@@ -3,7 +3,7 @@ module regfilePooling#(
     reg_num = 16 , 
     address_num = 4 
 )(
-    input  logic clk, nrst, wr_ctrl,
+    input  logic clk, nrst, wr_ctrl1,wr_ctrl2,
     input  logic [data_width-1:0] in1,in2 , 
     input  logic [address_num-1:0] adrs_in1, adrs_in2 , adrs_out , 
     output logic [data_width-1:0] out
@@ -21,8 +21,8 @@ always_ff @ (posedge clk, negedge nrst)
     end
         else
       begin
-        registers[adrs_in1] <= (wr_ctrl ) ? in : registers[adrs_in1];
-        registers[adrs_in2] <= (wr_ctrl ) ? in : registers[adrs_in2];
+        registers[adrs_in1] <= (wr_ctrl1 ) ? in : registers[adrs_in1];
+        registers[adrs_in2] <= (wr_ctrl2 ) ? in : registers[adrs_in2];
         out <= registers[adrs_out] ;  
       end
   end
