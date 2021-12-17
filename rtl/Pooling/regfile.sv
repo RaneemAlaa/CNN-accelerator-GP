@@ -21,7 +21,7 @@ always_ff @ (posedge clk, negedge nrst)
     end
         else
       begin
-        registers[adrs_in1] <= (wr_ctr1 ) ? in1 : registers[adrs_in1];
+        registers[adrs_in1] <= (wr_ctrl1 ) ? in1 : registers[adrs_in1];
         registers[adrs_in2] <= (wr_ctrl2 ) ? in2 : registers[adrs_in2];
         out <= registers[adrs_out] ;  
       end
