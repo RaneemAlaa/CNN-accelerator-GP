@@ -1,12 +1,12 @@
-module top_pooling
-  #(  parameter data_width = 8)
+module pooling_top
+  #(  parameter data_width = 16)
    (   
        input clk,nrst,start,en,
        input [data_width-1:0]sys_out,
        Inout [data_width-1:0] pooling_out);
        output pooling_done;
 
-    logic [datawidth-1:0] x,z;
+  logic [data_width-1:0] x,z;
 
     assign x =(get_this_from_control1)?sys_out:out;
 

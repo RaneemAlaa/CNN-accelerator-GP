@@ -19,11 +19,9 @@ always @(posedge clk_in or negedge nrst_in )begin
 	end
 	else if(ctrl_in) begin
 		weight_in <= PE_in;
-		//partial_sum_in <= partial_sum_in;
 		PE_out <= PE_in;
 	end
 	else begin
-		//weight_in <= weight_in;
 		partial_sum_in <= PE_in;
 		PE_out <= partial_sum_out;
 	end
