@@ -6,7 +6,9 @@ module pooling_control #(
     output  logic [address_num-1:0] current_adrs1, current_adrs2 , current_adrs_out ,  
     output logic mux_en ,wr_ctrl1,wr_ctrl2,pool_done 
 );
-
+// imp note the memory here is consists of 16 palces we use the first 14'th of them to stor the out of pooling two elemnts in buffering stage 
+// and use the last elemnts the 16'th one to store the new value come from the systolic to the memory in odd clocks 
+// we don't ust the 15'th element of the memory any way .. the index of this elemnt is 14 
 logic [address_num-1:0]    next_adrs1 , next_adrs2 , next_adrs_out   ; 
 logic [4:0] current_col_counter  , next_col_counter,current_row_counter,next_row_counter  ; 
 enum logic [1:0] {
@@ -58,8 +60,9 @@ always_comb
                 end 
             buffering :
                 begin
-                    mux_en=0;
                     next_col_counter =current_col_counter +1;
+                    mux_en=0;
+                    
                     if(current_col_counter  == sys_width ) 
                         begin 
                             next_state = working ;
@@ -74,28 +77,29 @@ always_comb
                         begin
                             wr_ctrl1=1;
                             wr_ctrl2=0;
-                            next_adrs_out=sys_width >> 2;
-                            next_adrs1=4'hf;
+                            next_adrs_out= (sys_width >> 1)-1 ; // 14 
+                            next_adrs1=4'hf; // 15  // always the same place  
                             if(next_row_counter==0)
                             pool_done=0;
                             else
                             pool_done=1;
                         end
-                    else if( (current_col_counter [0]) ) // to even on odd clocks for workin for 14 times only 
+                    else if( (current_col_counter [0]) ) // the counter is odd so the clock will be even here
                         begin
                             wr_ctrl1=0;
                             wr_ctrl2=0;
                             next_adrs_out=4'hf;
                             pool_done=0;
                         end   
-                    else
+                    else       // the counter is even so the clock will be odd here
                         begin
                             wr_ctrl1=1;
                             wr_ctrl2=1;
-                            next_adrs1=4'hf;
-                            next_adrs2=(current_col_counter  >> 1)-1;
+                            next_adrs1=4'hf;  // always the same place the last elemnt 
+                            next_adrs2=(current_col_counter  >> 1)-1; // the first element in the memory and it will rais every odd clocks 
                             pool_done=0;
                         end
+                    
                 end
             working :
                 begin
@@ -103,23 +107,23 @@ always_comb
                     next_col_counter =current_col_counter +1;
                      if(current_col_counter  == sys_width ) 
                         begin 
-                            next_state = buffering ;
+                            
+                            if(current_row_counter==sys_width) begin next_state = idle; end 
+                            
+                            else begin next_state=buffering; end 
+                                    
                             next_col_counter =0; 
                             next_row_counter =current_row_counter+1;
-                            if(current_row_counter==sys_width)
-                            next_state = idle;
-                            else
-                            next_state=current_state;
                         end
                     if(current_col_counter ==0)
                         begin
                             wr_ctrl1=1;
                             wr_ctrl2=1;
-                            next_adrs2=sys_width >> 1;
+                            next_adrs2= ( sys_width >> 1 )-1 ; // the adress wich the out of last two elements in the buffering stage will be writen 
                             next_adrs1=4'hf;
                             pool_done=0;                           
                         end
-                    if( (current_col_counter [0]) ) // to work on even clocks for workin for 14 times only 
+                    if( (current_col_counter [0]) ) // the counter is odd so the clock will be even here 
                         begin
                             wr_ctrl1=0;
                             wr_ctrl2=0;
@@ -129,7 +133,7 @@ always_comb
                             else
                                 pool_done=0;
                         end    
-                    else
+                    else  // the counter is even so the clock will be odd here 
                         begin
                              wr_ctrl1=1;
                              wr_ctrl2=0;
