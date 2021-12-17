@@ -14,7 +14,7 @@ logic [address_num-1:0]    next_adrs1 , next_adrs2 , next_adrs_out   ;
 logic [4:0] current_col_counter  , next_col_counter,current_row_counter,next_row_counter  ; 
 enum logic [1:0] {
                     idle = 2'b00,
-                    buffering = 2'b01,  // in this state we will wate for 16 clock == 14 for first row +1 +1 
+                    buffering = 2'b01,  
                     working = 2'b10 }current_state,next_state;
 
 always_ff @(posedge clk, negedge nrst) begin
@@ -85,7 +85,7 @@ always_comb
                             else
                             pool_done=1;
                         end
-                    else if( (current_col_counter [0]) ) // for odd counter read reg xF
+                    else if( (current_col_counter [0]) ) // for odd counter read reg xF "the last one" 
                         begin
                             wr_ctrl1=0;
                             wr_ctrl2=0;
