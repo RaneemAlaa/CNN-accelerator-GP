@@ -6,7 +6,7 @@ module pooling_control #(
     output  logic [address_num-1:0] current_adrs1, current_adrs2 , current_adrs_out ,  
     output logic mux_en ,wr_ctrl1,wr_ctrl2,pool_done 
 );
-//the required memory is (matrix size/2)+1
+//the required memory is (matrix size/2)+1  here we need (28/2)+1 = 15    but here we use memory its legth is 16 so there is one position didn't used 
 // imp note the memory here is consists of 16 palces we use the first 14'th of them to stor the out of pooling two elemnts in buffering stage 
 // and use the last elemnts the 16'th one to store the new value come from the systolic to the memory in odd clocks 
 // we don't ust the 15'th element of the memory any way .. the index of this elemnt is 14 
