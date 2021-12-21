@@ -16,7 +16,6 @@ genvar i;
 generate
     for(i=0;i<32;i=i+1)
     begin:pooling_unit 
-
          assign x[i] =(mux_en)?sys_out[i]:out[i];
 
 regfilePooling reg_file_Pooling(
@@ -41,16 +40,19 @@ regfilePooling reg_file_Pooling(
         );
     end:pooling_unit
 endgenerate
-pooling_control control(
-         .clk(clk),
-         .nrst(nrst),
-         .start(start),
-         .current_adrs1(add_in1),
-         .current_adrs2(add_in2) ,
-         .current_adrs_out(add_out),
-         .mux_en(mux_en),
-         .wr_ctrl1(Wr_ctrl1),
-         .wr_ctrl2(Wr_ctrl2),
-         .pool_done(pooling_done)
-    );
-endmodule
+
+
+
+genvar j ; 
+generate
+    for(i=0; i < 31 ; i = i + 1 )
+        begin : pipline // the first two rows fro inputs and the other two is for the out out 
+            pooling_pipline pipe(.clk(clk),.nrst(nrst),.enable(enable),
+            //////////////////
+            .in_adrs1(add_in[i]),.in_adrs2(add_in[i]),.in_adrs_out(add_out[i]),
+            .in_mux_en(mux_en[i]),.in_wr_ctrl1(Wr_ctrl[i]), .in_wr_ctrl2(Wr_ctrl[i]), .in_pool_done(pooling_done[i]) ,
+            /////////////////
+            .out_adrs1(out_adrs[i]),.out_adrs2(out_adrs[i]) , .out_adrs_out(out_adrs_out[i]) ,.out_mux_en(out_mux_en[i]) ,
+            .out_wr_ctrl1(out_wr_ctrl1[i]), .out_wr_ctrl2(out_wr_ctrl2[i]), .out_pool_done(out_pool_done[i]) );
+        end : pipline
+endgenerate
