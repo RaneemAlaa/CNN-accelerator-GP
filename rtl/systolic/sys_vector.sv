@@ -5,7 +5,7 @@ module systolic_vector
   );
 
 //wire [row-1:0][width-1:0] feature_output;
-wire [width-1:0] weight[row:0];
+logic [width-1:0] weight[row:0];
 
 
 assign weight[0] = weight_input1;
