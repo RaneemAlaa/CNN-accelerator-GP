@@ -10,6 +10,7 @@ module map_top #(
   input logic  [data_width-1:0]  new1, new2,                            //data comes from AXI
   input logic  [address_num-1:0] adrs_in1, adrs_in2,
   output logic [data_width-1:0]  out [weight_size-1:0]
+  output done;
 );
 logic [5:0] round,PU1_add,PU_No,row_No;
 
@@ -33,5 +34,6 @@ logic [5:0] round,PU1_add,PU_No,row_No;
     .PU1_add(PU1_add),
     .PU_No(PU_No),
     .row_No(row_No)
+    .done(done)
   );
 endmodule
