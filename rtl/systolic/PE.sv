@@ -1,12 +1,16 @@
 module PE(clk_in,nrst_in,ctrl_in,PE_in,PE_out,feature_in,feature_out);
-parameter w = 8;
+parameter w = 8; // data_width
+	//input port
 input clk_in,nrst_in,ctrl_in;
 input [w-1:0]PE_in,feature_in;
+	//output port
 output [w-1:0] feature_out;
-output reg [w-1:0] PE_out;
-reg [w-1:0] weight_in,partial_sum_in;
-wire [w*2-1:0] mul_out;
-wire [w-1:0]tmp,partial_sum_out ;
+output logic [w-1:0] PE_out;
+	//internal registers & wires
+logic [w-1:0] weight_in,partial_sum_in;
+logic [w*2-1:0] mul_out;
+logic [w-1:0]tmp,partial_sum_out ;
+	
 assign mul_out = weight_in * feature_in;
 assign tmp = mul_out[w-1:0];              	 //quantization
 assign partial_sum_out = partial_sum_in +tmp;
