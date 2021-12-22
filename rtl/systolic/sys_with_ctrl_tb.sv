@@ -1,12 +1,12 @@
 module sys_ctrl_tb();
 parameter width=8 , row=2 ,  col=2;
 
- reg    clk;
- reg	nrst;
- reg    w_ps;
- reg	[width-1:0] weight_input[col-1:0] ;
- reg	[width-1:0] feature_input [row-1:0];
- wire	[width-1:0] systolic_out [col-1:0];
+ logic   clk;
+ logic	nrst;
+ logic    w_ps;
+ logic	[width-1:0] weight_input[col-1:0] ;
+ logic	[width-1:0] feature_input [row-1:0];
+ logic	[width-1:0] systolic_out [col-1:0];
 sys_with_ctrl#(width , row , col) dut(.clk(clk),.rstn(nrst),.w_ps(w_ps), .weight_input(weight_input), .feature_input(feature_input), .systolic_out(systolic_out));
 initial begin
  clk = 0;
