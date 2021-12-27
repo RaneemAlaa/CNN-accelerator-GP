@@ -1,20 +1,17 @@
 module systolic_array
-  #(parameter width=8 , row=2 ,  col=2)(//[row*col-1:0][col-1:0]ctrl_in2
+  #(parameter width=8 , row=3 ,  col=3)(
   input clk_in2, nrst_in2,ctrl_in2, [width-1:0] weight_input2 [col-1:0] ,[width-1:0] feature_input2 [row-1:0],
   output [width-1:0] systolic_out [col-1:0]
   );
 
-//wire [row-1:0][width-1:0] out;
-//assign systolic_out = out[row-1];
 
-wire  [width-1:0]feature_wires[row*(col+1):0];
-//wire [row*col-1:0] [width-1:0]weight_wires;
+logic  [width-1:0]feature_wires[row*(col+1):0];
 
 assign feature_wires[row-1:0]=feature_input2;
-//assign weight_wires[row-1:0]=weight_input2;
+
 
 genvar j;
-//genvar k;
+
 
 generate
 	for (j=0; j<=col-1; j=j+1) begin 
@@ -31,7 +28,5 @@ generate
 		
 	end 
 
-
-endgenerate
-		 
+endgenerate		 
 endmodule
