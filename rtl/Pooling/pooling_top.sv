@@ -3,35 +3,39 @@ module pooling_top
       parameter col = 32
     )
    (   
-       input clk,nrst,start,en,
+       input clk,nrst,start,
+       input en[col-1],
        input [data_width-1:0]sys_out[col-1],
        inout [data_width-1:0] pooling_out[col-1],
        output pooling_done[col-1]
     );
 
 logic [data_width-1:0] x,z,out[col-1];
-logic mux_en,Wr_ctrl1,Wr_ctrl2,add_in1,add_in2,add_out;
- 
+logic mux_en[col-1],Wr_ctrl1[col-1],Wr_ctrl2[col-1],add_in1[col-1],add_in2[col-1],add_out[col-1];
+
+//instantiation and connection of all components of pooling unit excluding control
+
 genvar i;
 generate
     for(i=0;i<32;i=i+1)
     begin:pooling_unit 
-         assign x[i] =(mux_en)?sys_out[i]:out[i];
 
+         assign x[i] =(mux_en[i])?sys_out[i]:out[i]; // The mux that decides whether the input for the pooling operation will be the output of last operation or systolic array
+//instantiation of the reg file 32 times
 regfilePooling reg_file_Pooling(
             .clk(clk),
             .nrst(nrst),
-            .Wr_ctrl1(Wr_ctrl1),
-            .wr_ctrl2(Wr_ctrl2),
+            .Wr_ctrl1(Wr_ctrl1[i]),
+            .wr_ctrl2(Wr_ctrl2[i]),
             .in1(sys_out[i]),
             .in2(pooling_out[i]),
-            .add_in1(add_in1),
-            .add_in2(add_in2),
-            .add_out(add_out),
+            .add_in1(add_in1[i]),
+            .add_in2(add_in2[i]),
+            .add_out(add_out[i]),
             .out(z[i])
         );
 
-
+//instantiation of the pooling 32 times
         max_avg_pooling pooling (
             .in1(x[i]),
             .in2(z[i]),
@@ -41,18 +45,43 @@ regfilePooling reg_file_Pooling(
     end:pooling_unit
 endgenerate
 
+//instantiation of control_unit that generates control signal for all 32 pooling units
 
+pooling_control control(
+         .clk(clk),
+         .nrst(nrst),
+         .start(start),
+         .current_adrs1(add_in1[0]),
+         .current_adrs2(add_in2[0]) ,
+         .current_adrs_out(add_out[0]),
+         .mux_en(mux_en[0]),
+         .wr_ctrl1(Wr_ctrl1[0]),
+         .wr_ctrl2(Wr_ctrl2[0]),
+         .pool_done(pooling_done[0])
+    );
 
-genvar j ; 
-generate
-    for(i=0; i < 31 ; i = i + 1 )
-        begin : pipline // the first two rows fro inputs and the other two is for the out out 
-            pooling_pipline pipe(.clk(clk),.nrst(nrst),.enable(enable),
-            //////////////////
-            .in_adrs1(add_in[i]),.in_adrs2(add_in[i]),.in_adrs_out(add_out[i]),
-            .in_mux_en(mux_en[i]),.in_wr_ctrl1(Wr_ctrl[i]), .in_wr_ctrl2(Wr_ctrl[i]), .in_pool_done(pooling_done[i]) ,
-            /////////////////
-            .out_adrs1(out_adrs[i]),.out_adrs2(out_adrs[i]) , .out_adrs_out(out_adrs_out[i]) ,.out_mux_en(out_mux_en[i]) ,
-            .out_wr_ctrl1(out_wr_ctrl1[i]), .out_wr_ctrl2(out_wr_ctrl2[i]), .out_pool_done(out_pool_done[i]) );
-        end : pipline
-endgenerate
+    //instantiation of latches responsible for delay of control singal to reach each pooling unit at correct time
+
+genvar j;
+generate  
+     for(i=1;i<32;i=i+1)
+     begin:latch_vector
+
+pooling_pipline pipeline(
+         .enable(en[i]),
+         .out_adrs1 (add_in1[i]), 
+         .out_adrs2 (add_in2[i]),
+         .out_adrs_out (add_out[i]), 
+         .out_mux_en (mux_en[i]),
+         .out_wr_ctrl1 (Wr_ctrl1[i]),
+         .out_wr_ctrl2 (wr_ctrl2[i]),
+         .out_pool_done (pooling_done[i]),
+         .in_adrs1 (add_in1[i-1]),
+         .in_adrs2 (add_in2[i-1]),
+         .in_adrs_out (add_out[i-1]),
+         .in_mux_en (mux_en[i-1]),
+         .in_wr_ctrl1 (Wr_ctrl1[i-1]),
+         .in_wr_ctrl2 (wr_ctrl2[i-1]),
+         .in_pool_done (pooling_done[i-1]) 
+)
+endmodule
