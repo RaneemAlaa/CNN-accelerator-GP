@@ -4,9 +4,9 @@ module PUs #(
             address_num = 5,
             reg_num     = 20
 ) (
-  input logic clk, nrst,start, neighbour_in_flag,wr_ctrl_g,
+  input logic clk, nrst,start, neighbour_in_flag,
   input logic [5:0]round,
-  input logic  [address_num-1:0] adrs_in1, adrs_in2,
+  input logic  [address_num-1:0] adrs_in1, adrs_in2,wr_ctrl_g,
   input logic  [data_width-1:0]  new1, new2,                       //data comes from AXI
   input logic  [data_width-1:0]  neighbour_in [reg_num-1:0],       //data from neighbour PU
   output logic [data_width-1:0]  neighbour_out [reg_num-1:0],      //data to neighbour PU
