@@ -4,11 +4,12 @@ module PU1 #(
 	          address_num = 5, 
             reg_num     = 20
 ) (
-  input  logic  clk, nrst, start, round,wr_ctrl_g,
-  input  logic  [address_num-1:0] adrs_in1, adrs_in2,
+  input  logic  clk, nrst, start, 
+  input logic [5:0] round , 
+  input  logic  [address_num-1:0] adrs_in1, adrs_in2,wr_ctrl_g,
   input  logic  [data_width-1:0] new1, new2,                       //data comes from AXI
   output logic  [data_width-1:0] neighbour_out [reg_num-1:0],     //data to neighbour PU
-  output logic  [data_width-1:0] out [weight_size-1:0],
+  output logic [data_width-1:0]  out[weight_size-1:0],
   output logic  neighbour_out_flag
 );
 
