@@ -8,7 +8,7 @@ module PU_control#(
     input logic [data_width-1:0] out_r [reg_num-1:0],
     input logic clk,nrst,
     input logic start, wr_ctrl_g,
-    input logic [5:0]round,
+    input logic [5:0] round ,
     input logic [address_num-1:0] adrs_in1, adrs_in2,
     output logic r_ctrl_g, wr_ctrl_r , r_ctrl_r, neighbour_out_flag , 
     output logic [data_width-1:0] neighbour_out [reg_num-1:0],
@@ -21,7 +21,7 @@ enum logic [1:0]  {idle=2'b00,
              read_g=2'b10,
              write_r=2'b11} states ;
 
-logic [1:0]current_state , next_state ; C:/Users/PC/Documents/GitHub/CNN-accelerator-GP/rtl/img2col/pu_control.sv
+logic [1:0]current_state , next_state ; 
 
 always_ff@(posedge clk , negedge nrst)
 begin     
@@ -60,7 +60,7 @@ end
               r_ctrl_g  = 1;
                neighbour_out_flag = 1;
               next_state = write_r;
-              if(round == 1) 
+              if(round == 0) 
                begin
                 assign neighbour_out = {out_g[4:1], out_g[9:6], out_g[14:11], out_g[19:16], out_g[24:21]}; //kant 14
                 assign out = out_g;
@@ -79,7 +79,7 @@ end
               r_ctrl_g  = 1;
                neighbour_out_flag = 0;
               next_state = write_g;
-              if(round==1)
+              if(round==0)
                 assign in_r = out_g[24:5];
               else
                 assign in_r = {out_r[19:5], out_g[24:20]};
@@ -88,4 +88,3 @@ end
    end
 
 endmodule 
-// neightor out flag ????
