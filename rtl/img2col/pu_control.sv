@@ -7,9 +7,9 @@ module PU_control#(
     output logic [data_width-1:0] in_r [reg_num-1:0],
     input logic [data_width-1:0] out_r [reg_num-1:0],
     input logic clk,nrst,
-    input logic start, wr_ctrl_g,
+    input logic start, 
     input logic [5:0] round ,
-    input logic [address_num-1:0] adrs_in1, adrs_in2,
+    input logic [address_num-1:0] adrs_in1, adrs_in2,wr_ctrl_g,
     output logic r_ctrl_g, wr_ctrl_r , r_ctrl_r, neighbour_out_flag , 
     output logic [data_width-1:0] neighbour_out [reg_num-1:0],
     output logic [data_width-1:0] out [weight_size-1:0] 
