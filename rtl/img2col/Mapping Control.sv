@@ -1,6 +1,5 @@
 module Map_Control(
   input logic clk,nrst,start,
-  output done;
   output logic [5:0] current_round,current_PU1_add,current_PU_No,current_row_No
 );
 
@@ -39,7 +38,6 @@ logic [5:0] next_PU1_add, next_PU_No, next_row_No, next_round ;
     unique case(current_state)
       Idle:
       begin
-        done=0;
         next_PU1_add = 0;
         next_PU_No   = 0;
         next_row_No  = 0;
@@ -56,7 +54,6 @@ logic [5:0] next_PU1_add, next_PU_No, next_row_No, next_round ;
 
       Buffering:
       begin
-         done=0;
         if( next_PU1_add < 6'd04 )
         begin
           next_PU1_add = next_PU1_add + 1;
@@ -93,7 +90,6 @@ logic [5:0] next_PU1_add, next_PU_No, next_row_No, next_round ;
              begin
               next_PU1_add = next_PU1_add + 1;
               next_state = current_state;
-              done=0;
              end
            else
             begin
@@ -103,7 +99,6 @@ logic [5:0] next_PU1_add, next_PU_No, next_row_No, next_round ;
               next_PU1_add = 0;
               next_round  = next_round + 1;
 		          next_state=current_state;
-              done=0;
             end
           else 
           begin
@@ -112,12 +107,10 @@ logic [5:0] next_PU1_add, next_PU_No, next_row_No, next_round ;
             begin
             next_state = Idle;
             next_round = current_round;
-            done=1;
             end
             else
             begin
               next_state = current_state;
-               done=0;
             end
           end
         end
