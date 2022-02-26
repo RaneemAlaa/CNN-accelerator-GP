@@ -6,15 +6,15 @@ module map_top #(
             reg_num     = 20
 ) (
   input logic  clk,nrst,
-  input logic  [row-1:0] start,
+  input logic  start,
   input logic  [data_width-1:0]  new1, new2,                            //data comes from AXI
   input logic  [address_num-1:0] adrs_in1, adrs_in2,
   output logic [data_width-1:0]  out [weight_size-1:0]
-  output done;
 );
 logic [5:0] round,PU1_add,PU_No,row_No;
 
   pus_vector pus_vector(
+      .round(round),
       .clk(clk),
       .nrst(nrst),
       .start(start),
@@ -30,10 +30,9 @@ logic [5:0] round,PU1_add,PU_No,row_No;
     .clk(clk),
     .nrst(nrst),
     .start(start),
-    .round(round),
-    .PU1_add(PU1_add),
-    .PU_No(PU_No),
-    .row_No(row_No)
-    .done(done)
+    .current_round(round),
+    .current_PU1_add(PU1_add),
+    .current_PU_No(PU_No),
+    .current_row_No(row_No)
   );
 endmodule
