@@ -3,12 +3,12 @@ module regfile2in #(
                reg_num    = 5,
                address_num= 5
 ) (
-    input  logic clk, nrst, wr_ctrl, r_ctrl,
+    input  logic clk, nrst,  r_ctrl,
     input  logic [data_width-1:0] in1, in2,
-    input  logic [address_num-1:0] adrs_in1, adrs_in2,                   //address bus
-    output logic [data_width-1:0] out [reg_num-1:0]
+    input  logic [address_num-1:0] adrs_in1, adrs_in2,wr_ctrl,                   //address bus
+    output logic [data_width-1:0] out [reg_num-1:0]// original was [4:0] but it's connection with out_g is fatal error cause out_g is [24:0]
 );
-   logic [data_width-1:0] registers [reg_num-1:0];
+   logic [data_width-1:0] registers [reg_num-1:0]; // original was [4:0] but it's connection with  out_g is fatal error cause out_g is [24:0]
 
   always_ff @ (posedge clk, negedge nrst) 
   begin
