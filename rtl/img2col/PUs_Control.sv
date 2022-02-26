@@ -1,10 +1,10 @@
 module PUs_control#(
     parameter data_width  = 16,
     parameter reg_num = 20 ,
-    parameter address_num = 2 ,
+    parameter address_num = 5,
     parameter weight_size = 25 
-  )(input logic [data_width-1:0] out_g [24:0],
-    input logic [data_width-1:0] in_r [reg_num-1:0],
+  )(input logic [data_width-1:0] out_g [4:0],
+   output logic [data_width-1:0] in_r [reg_num-1:0],// the error here that it was an input
     input logic [data_width-1:0] out_r [reg_num-1:0],
     input logic [data_width-1:0] out_n [reg_num-1:0],
     input logic clk,nrst,start,neighbour_in_flag,
@@ -14,7 +14,7 @@ module PUs_control#(
     output logic [data_width-1:0] neighbour_out [reg_num-1:0],
     output logic [data_width-1:0] out [weight_size-1:0] 
 );
-
+logic [15:0] neighbour_out_zeros ; 
 
 enum logic [1:0]  {idle=2'b00,
              write_g=2'b01,
@@ -32,7 +32,7 @@ begin
 end
 
    
- always_comb
+ always@(*)
    begin
      case(current_state)
       
@@ -65,18 +65,21 @@ end
               r_ctrl_g  = 1;
                neighbour_out_flag= 1;
               next_state = write_r;
-              if(round==1) 
+              if(round==0) 
                begin
-                assign neighbour_out = {out_n[1:3],out_g[0],out_n[5:7],out_g[2],out_n[9:11],out_g[3],out_n[13:15],out_g[4],out_n[17:19],out_g[5]};
-                assign out = {out_n[0:3],out_g[0],out_n[4:7],out_g[1],out_n[8:11],out_g[2],out_n[12:15],out_g[3],out_n[16:19],out_g[4]};
+                assign neighbour_out = {out_n[3:1],out_g[0],out_n[7:5],out_g[2],out_n[11:9],out_g[3],out_n[15:13],out_g[4],out_n[19:17],out_g[5]};
+                assign out = {out_n[3:0],out_g[0],out_n[7:4],out_g[1],out_n[11:8],out_g[2],out_n[15:12],out_g[3],out_n[19:16],out_g[4]};
                 
                end
               else 
                begin 
-                assign neighbour_out = {out_n[17:19],out_g[4]};
-                assign out = {out_r,out_n[16:19],out_g[4]};
+		//assign neighbour_out_zeros= '{default:16'h0000} ; {16{1'b0}}
+                assign neighbour_out = {out_n[19:17],out_g[4], 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0  }; 
+                assign out = {out_r,out_n[19:16],out_g[4]};
                end
           end 
+
+
        write_r:
 			begin 
              wr_ctrl_n = 0;
@@ -86,10 +89,10 @@ end
               r_ctrl_g = 1;
                neighbour_out_flag=0;
               next_state = write_g;
-              if(round==1)
-                assign in_r = {out_n[4:7],out_g[1],out_n[8:11],out_g[2],out_n[12:15],out_g[3],out_n[16:19],out_g[4]};
+              if(round==0)
+           in_r = {out_n[7:4],out_g[1],out_n[11:8],out_g[2],out_n[15:12],out_g[3],out_n[19:16],out_g[4]};
               else
-                assign in_r = {out_r[5:19], out_n[16:19],out_g[4]};
+            in_r = {out_r[19:5], out_n[19:16],out_g[4]};
 	end 
       endcase 
    end
