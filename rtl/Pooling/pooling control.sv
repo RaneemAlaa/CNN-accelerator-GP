@@ -111,11 +111,11 @@ always_comb
                             if(current_row_counter==sys_width)
                             next_state = idle;
                             else
-                            next_state=buffering
+                            next_state=buffering;
                             
                             next_col_counter =0; 
                             next_row_counter =current_row_counter+1;
-;
+
                         end
                     if(current_col_counter ==0)//first clock in working is different as there is still 1 operation left over from buffering
                         begin
