@@ -24,12 +24,20 @@ always_ff @(posedge clk, negedge nrst) begin
     if (fifo_en)
     begin
       store[ in_idx +: 32] <= data_in;      //store 2 elements
-      in_idx <= (in_idx + 32) % 224;
+      in_idx <= (in_idx + 32);
+      if (in_idx == 192)
+      begin
+        in_idx <= 0;  
+      end
     end
     out_vld <= (bit_count >= 16 || fifo_en);
     if (out_vld)
     begin
-      out_idx <= (out_idx + 16) % 224;
+      out_idx <= (out_idx + 16);
+      if (out_idx == 208)
+      begin
+        out_idx <= 0;  
+      end
     end
   end
 end

@@ -4,9 +4,9 @@ module weight_array #(
 ) (
   input  logic  clk, nrst,
   input  logic  [col-1:0] out_en, fifo_en,
-  input  logic  [31:0] weight_in,           //from AXI
+  input  logic  [31:0] weight_in [15:0],           //from AXI
   output logic  [data_width-1:0] weight_out,
-  output logic  out_vld
+  output logic  [15:0] out_vld
 );
   genvar i;
   generate
@@ -16,9 +16,9 @@ module weight_array #(
                          .nrst(nrst),
                          .fifo_en(fifo_en[i]),
                          .out_en(out_en[i]),
-                         .data_in(weight_in),
+                         .data_in(weight_in[i]),
                          .data_out(weight_out),
-                         .out_vld(out_vld));
+                         .out_vld(out_vld[i]));
     end
   endgenerate
 endmodule

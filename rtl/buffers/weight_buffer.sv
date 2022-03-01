@@ -1,23 +1,27 @@
 module weight_buffer #(
   parameter data_width = 16
 ) (
-  input  logic  clk, nrst, fifo_en,
+  input  logic  clk, nrst, 
+  input  logic fifo_en,                    //!control signal to enable the FIFO storing the weight
   input  logic  [4:0] weight_dim,
-  input  logic  [31:0] data_in,           //from AXI
-  output logic  [data_width-1:0] data_out,
-  output logic  out_vld,pe_en
+  input  logic  [31:0] data_in,            //!weight from AXI
+  output logic  [data_width-1:0] data_out, //!weights to systolic array
+  output logic  out_vld,                   //!control signal that indicate the output is ready so the output pointer changes its position 
+  output logic  pe_en                      //!control the systolic to enable or disenable for taking the weight 
 );
 
-logic [223:0] store;      // 15 elements * 16 bits = 224
-logic [7:0] bit_count, next_bit_count, in_idx, out_idx;
-logic [4:0] next_element_count, current_element_count;
+logic [223:0] store;      //!15 elements * 16 bits = 224
+logic [7:0] bit_count, next_bit_count; //! number of bits stored in FIFO
+logic [7:0] in_idx;       //!input pointer
+logic [7:0] out_idx;      //!output pointer
+logic [4:0] next_element_count, current_element_count;  //! number of elements stored in FIFO
 
 always_ff @(posedge clk, negedge nrst) begin
   if (!nrst) 
   begin
-    in_idx    <= '0;             // input pointer
-    out_idx   <= '0;            // output pointer
-    bit_count <= '0;          // number of stored bits
+    in_idx    <= '0;             
+    out_idx   <= '0;
+    bit_count <= '0;
     out_vld   <= 1'b0;
     store     <= '0;
     pe_en     <= 1;

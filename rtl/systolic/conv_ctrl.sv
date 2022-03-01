@@ -55,7 +55,13 @@ module conv_ctrl #(
           next_state  = loading_PS ;
           first_out   = 1;
         end
-      end   				
-		  endcase
+      end
+      default:
+      begin
+        w_ps        = 1;
+        conv_finish = 0;
+        first_out   = 0;        				
+      end
+    endcase
 	end
 endmodule
