@@ -25,13 +25,13 @@ generate
 regfilePooling reg_file_Pooling(
             .clk(clk),
             .nrst(nrst),
-            .Wr_ctrl1(Wr_ctrl1[i]),
+            .wr_ctrl1(Wr_ctrl1[i]),
             .wr_ctrl2(Wr_ctrl2[i]),
             .in1(sys_out[i]),
             .in2(pooling_out[i]),
-            .add_in1(add_in1[i]),
-            .add_in2(add_in2[i]),
-            .add_out(add_out[i]),
+            .adrs_in1(add_in1[i]),
+            .adrs_in2(add_in2[i]),
+            .adrs_out(add_out[i]),
             .out(z[i])
         );
 
@@ -64,24 +64,30 @@ pooling_control control(
 
 genvar j;
 generate  
-     for(i=1;i<32;i=i+1)
+     for(j=1;j<32;j=j+1)
      begin:latch_vector
 
 pooling_pipline pipeline(
-         .enable(en[i]),
-         .out_adrs1 (add_in1[i]), 
-         .out_adrs2 (add_in2[i]),
-         .out_adrs_out (add_out[i]), 
-         .out_mux_en (mux_en[i]),
-         .out_wr_ctrl1 (Wr_ctrl1[i]),
-         .out_wr_ctrl2 (wr_ctrl2[i]),
-         .out_pool_done (pooling_done[i]),
-         .in_adrs1 (add_in1[i-1]),
-         .in_adrs2 (add_in2[i-1]),
-         .in_adrs_out (add_out[i-1]),
-         .in_mux_en (mux_en[i-1]),
-         .in_wr_ctrl1 (Wr_ctrl1[i-1]),
-         .in_wr_ctrl2 (wr_ctrl2[i-1]),
-         .in_pool_done (pooling_done[i-1]) 
-)
+         .enable(en[j]),
+	 .clk(clk),
+	 .nrst(nrst),
+
+         .out_adrs1 (add_in1[j]), 
+         .out_adrs2 (add_in2[j]),
+         .out_adrs_out (add_out[j]), 
+         .out_mux_en (mux_en[j]),
+         .out_wr_ctrl1 (Wr_ctrl1[j]),
+         .out_wr_ctrl2 (Wr_ctrl2[j]),
+         .out_pool_done (pooling_done[j]),
+
+         .in_adrs1 (add_in1[j-1]),
+         .in_adrs2 (add_in2[j-1]),
+         .in_adrs_out (add_out[j-1]),
+         .in_mux_en (mux_en[j-1]),
+         .in_wr_ctrl1 (Wr_ctrl1[j-1]),
+         .in_wr_ctrl2 (Wr_ctrl2[j-1]),
+         .in_pool_done (pooling_done[j-1]) );
+	
+	end:latch_vector
+endgenerate
 endmodule
