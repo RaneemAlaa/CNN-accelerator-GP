@@ -4,10 +4,10 @@ module pooling_top
     )
    (   
        input clk,nrst,start,
-       input en[col-1],
-       input [data_width-1:0]sys_out[col-1],
-       inout [data_width-1:0] pooling_out[col-1],
-       output pooling_done[col-1]
+       input en[col-1:0],
+       input [data_width-1:0]sys_out[col-1:0],
+       inout [data_width-1:0] pooling_out[col-1:0],
+       output pooling_done[col-1:0]
     );
 
 logic [data_width-1:0] x,z,out[col-1];
@@ -39,7 +39,7 @@ regfilePooling reg_file_Pooling(
         max_avg_pooling pooling (
             .in1(x[i]),
             .in2(z[i]),
-            .en(en),
+            .en(en[i]),
             .out(pooling_out[i])
         );
     end:pooling_unit
