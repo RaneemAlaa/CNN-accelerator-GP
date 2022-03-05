@@ -1,7 +1,7 @@
 module systolic_top 
 	#(parameter width = 8, col = 4, row = 4 )
 	 ( 
-	input  logic clk, nrst,conv_ctrl,weight_en,in_en[row-1:0],
+	input  logic clk, nrst,conv_ctrl,weight_en[col-1:0],in_en[row-1:0],
 	input  logic [4:0] weight_dim,
 	input  var logic  [width-1:0] weight_input2 [col-1:0] ,
 	input  var logic [width-1:0] feature_input2 [row-1:0],
