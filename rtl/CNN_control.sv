@@ -65,7 +65,7 @@ module ctrl_cnn(
       			pooling_ctrl = 0;
      			pu_en        = 0;
         		conv_ctrl    = 0;
-        		weight_en    ='0;
+        		weight_en    = 32'b0;
         		unique case(op_code_i[2:0])
 		  			3'b000:next_state = idle; 
           			3'b001:next_state = conv;
@@ -78,9 +78,11 @@ module ctrl_cnn(
 
 		  	conv:
 		  	begin                             //filter buffering
-		    	pooling_ctrl = 0;
        			if (next_i < op_code_i[8:3]) // to make first buffer for filter on 
        			begin 
+					pu_en = 0;
+					conv_ctrl=0;
+					pooling_ctrl = 0;
 					unique case(current_state_2) 
   				  		loading_weight_element:
   						begin 
@@ -122,14 +124,16 @@ module ctrl_cnn(
 				else 
 				begin
 			    	pu_en          = 1;
-          			weight_en      = '0;	
+					pooling_ctrl   = 0;
+          			weight_en      = 32'b0;
+					conv_ctrl	   = 0;	
           			next_state     = conv;
 			    	next_count_img = current_count_img + 1;	
 				  	if (next_count_img > 7'd133)			//(4*32+5)  to know when 1st output would be ready
 				  	begin
             			conv_ctrl  = 1;
             			pu_en      = (pu_finish)? 0 : 1;
-            			weight_en  = '0;
+            			weight_en  = 32'b0;
 				    	next_state = conv_finish? out : conv ;
           			end
 				end
@@ -139,13 +143,19 @@ module ctrl_cnn(
 		  	begin 
         	next_state = out;
 			pu_en = 0;
+			conv_ctrl  = 0;
+			pooling_ctrl = 0;
+
       		end
 
       		conv_pooling:
 		  	begin                             //filter buffering
        			if (next_i < op_code_i[8:3]) // to make first buffer for filter on 
        			begin 
+					pu_en = 0;
 		      		pooling_ctrl = 0;
+					conv_ctrl  = 0;
+
 				  	unique case(current_state_2) 
   				  		loading_weight_element:
   						begin 
@@ -188,7 +198,7 @@ module ctrl_cnn(
 				else                           
 				begin
 					pu_en          = 1; 
-          			weight_en      = 0;
+          			weight_en      = 32'b0;
           			pooling_ctrl   = 0;
           			conv_ctrl      = 0;	
 		      		next_count_img = current_count_img + 1;
@@ -201,7 +211,7 @@ module ctrl_cnn(
               				next_count_conv = current_count_conv+1;
               				conv_ctrl       = 1;
               				pooling_ctrl    = 0;
-              				weight_en       = 0;
+              				weight_en       = 32'b0;
               				pu_en           = 1;
               				next_state      = conv_pooling;
             			end 
@@ -209,7 +219,7 @@ module ctrl_cnn(
             			begin
               				pu_en        = (pu_finish)? 0 : 1;
               				pooling_ctrl = 1;
-              				weight_en    = 0;
+              				weight_en    = 32'b0;
               				conv_ctrl    = (conv_finish)? 0 : 1;
 			        		next_state   = (pooling_finish)? out : conv_pooling ;
             			end
@@ -223,7 +233,7 @@ module ctrl_cnn(
         		pooling_ctrl=0;
         		pu_en = 0;
         		conv_ctrl=0;
-        		weight_en ='0;
+        		weight_en =32'b0;
         		next_count_img = 0;
         		next_count_conv=0;
         		next_i=0;
@@ -234,7 +244,7 @@ module ctrl_cnn(
         		pooling_ctrl=0;
         		pu_en = 0;
         		conv_ctrl=0;
-        		weight_en ='0;
+        		weight_en =32'b0;
         		next_count_img = 0;
         		next_count_conv=0;
         		next_i=0;
