@@ -14,7 +14,6 @@ module systolic_top_tb ;
 		.nrst(nrst),
 		.conv_ctrl(conv_ctrl),
 		.weight_en(weight_en),
-		//.in_en(in_en),
 		.weight_dim(weight_dim),
 		.weight_input2(weight_input2),
 		.feature_input2(feature_input2),
