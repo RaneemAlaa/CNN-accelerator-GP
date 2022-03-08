@@ -4,7 +4,10 @@ module pe#(parameter width = 8) (input clk,rst_n,ctrl,in_en,
 	output logic [width-1:0]PE_out,feature_out);
 logic [width-1:0]weight,tmp,tmp_in;
 logic [width*2-1:0]mul_out; 
-assign out_in = 1;  // always = 1 to make pe in next column take latest value (feature input when in_en = 1 or 0 when in_en = 0)  
+assign out_in = 1;  // always = 1 to make pe in next column
+                   // take latest value (feature input when 
+                  //in_en = 1 or 0 when 
+				 //in_en = 0)  
 always_ff @(posedge clk or negedge rst_n) begin 
 	if(~rst_n) begin
 		 PE_out <= 0;

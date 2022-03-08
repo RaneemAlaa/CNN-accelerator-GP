@@ -13,7 +13,7 @@ module conv_ctrl #(
 
   logic[4:0] current_count, next_count;
   logic[4:0] current_i,next_i; //!number of PEs
-  logic[5:0] next_clock_counter,current_clock_counter;//! signal detrmine when we will disenable the the systollic to take input 
+  logic[5:0] next_clock_counter,current_clock_counter;//! signal detrmine when we will disenable the the systolic to take input 
   logic first_out; 
 
   always_ff @(posedge clk, negedge nrst) 
