@@ -1,11 +1,11 @@
 module conv_ctrl #(
-    parameter col = 32
+    parameter col = 32 , row = 32
   )(
     input  logic clk, nrst, conv_ctrl,
     input  logic [4:0] weight_dim,
     output logic conv_finish, w_ps, 
-    output logic [col-1:0] out_en,
-    output logic [31:0]input_en
+    output logic  out_en[col-1:0],
+    output logic input_en [row-1:0]
   );
 
   enum logic [1:0] {  loading_weight = 2'b01,
@@ -49,6 +49,9 @@ module conv_ctrl #(
         w_ps        = 1;
         conv_finish = 0;
         first_out   = 0;
+	for (int i = 0; i < row; i++) begin  // enable all pes
+          input_en[i] = 1;
+        end      
       end
 
       loading_PS:
@@ -57,8 +60,8 @@ module conv_ctrl #(
          next_clock_counter=next_clock_counter+1;
          if (next_clock_counter > 28 && next_clock_counter <55)
           begin 
-           input_en [next_i] = 1;
- 					 next_i=current_i+1;
+		input_en [next_i] = 0;
+ 		next_i=current_i+1;
           end   
         if ( (next_count < weight_dim) && !first_out ) begin
           next_state  = loading_PS ;
