@@ -49,21 +49,22 @@ module conv_ctrl #(
         w_ps        = 1;
         conv_finish = 0;
         first_out   = 0;
-	input_en = '{default:1};
+	      input_en = '{default:1};
       end
 
       loading_PS:
       begin
         w_ps = 0;
-         next_clock_counter=next_clock_counter+1;
-         if (next_clock_counter > 28 && next_clock_counter <55)
+        next_clock_counter = next_clock_counter+1;
+        if (next_clock_counter > 28 && next_clock_counter <55)
           begin 
-		input_en [next_i] = 0;
- 		next_i=current_i+1;
+		        input_en [next_i] = 0;
+ 		        next_i=current_i+1;
           end   
         if ( (next_count < weight_dim) && !first_out ) begin
           next_state  = loading_PS ;
           next_count  = current_count + 1;
+          conv_finish = 0;
         end 
         else
         begin
@@ -76,7 +77,8 @@ module conv_ctrl #(
       begin
         w_ps        = 1;
         conv_finish = 0;
-        first_out   = 0;        				
+        first_out   = 0;
+        input_en    = '0;      				
       end
     endcase
 	end
