@@ -49,9 +49,7 @@ module conv_ctrl #(
         w_ps        = 1;
         conv_finish = 0;
         first_out   = 0;
-	for (int i = 0; i < row; i++) begin  // enable all pes
-          input_en[i] = 1;
-        end      
+	input_en = '{default:1};
       end
 
       loading_PS:
