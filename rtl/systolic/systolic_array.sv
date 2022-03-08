@@ -23,7 +23,7 @@ generate
         		.clk_in1(clk_in2),
         		.nrst_in1(nrst_in2),
        			.ctrl_in1(ctrl_in2),
-			.weight_en(weight_en[j]),
+				.weight_en(weight_en[j]),
        			.in_en(en_wires[(j+1)*row-1:j*row]),
        			.out_in(en_wires[(j+2)*row-1:(j+1)*row]),
         		.weight_input1(weight_input2[j]),

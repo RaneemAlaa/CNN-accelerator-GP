@@ -28,6 +28,6 @@ always_comb begin
 	else
 		tmp_in = 0;
 	mul_out = weight * tmp_in;
-	tmp = mul_out [width-1:0];	//quantization
+	tmp = mul_out [width*2 - 1 - width/2 : width/2];	//quantization
 end
 endmodule
