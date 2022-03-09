@@ -1,7 +1,7 @@
 module input_buffer #(
   parameter data_width = 16 ,I=0
 ) (
-  input  logic  clk, nrst, fifo_en, out_en,
+  input  logic  clk, nrst, fifo_en,
   input  logic  [31:0] data_in,           //from AXI
   output logic  [data_width-1:0] data_out,
   output logic out_vld
@@ -9,7 +9,7 @@ module input_buffer #(
 
 logic [I:0] store;      // 1 element * 16 bits = 224
 logic  [7:0]bit_count,next_bit_count,in_idx,out_idx;
-
+logic [C:0] current_enable_count,next_enable_count; // ظبطي بس ال الكونت الي هتوقفي بيها الانبوت هتوقفيها امتي  
 always_ff @(posedge clk, negedge nrst) begin
   if (!nrst) 
   begin
@@ -24,20 +24,12 @@ always_ff @(posedge clk, negedge nrst) begin
     if (fifo_en)
     begin
       store[ in_idx +: 32] <= data_in;      //store 2 elements
-      in_idx <= (in_idx + 32);
-      if (in_idx == 192)
-      begin
-        in_idx <= 0;  
-      end
+      in_idx <= (in_idx + 32) % 224;
     end
     out_vld <= (bit_count >= 16 || fifo_en);
     if (out_vld)
     begin
-      out_idx <= (out_idx + 16);
-      if (out_idx == 208)
-      begin
-        out_idx <= 0;  
-      end
+      out_idx <= (out_idx + 16) % 224;
     end
   end
 end
@@ -54,15 +46,15 @@ always_comb begin
   end
 end
 
-assign data_out = out_en? store[ out_idx +: 16 ] : data_out;
+assign data_out =  store[ out_idx +: 16 ] ;
   
 endmodule
 
 module input_array#(
     
 parameter I=0) (
-    input  var[15:0] data_in [24:0] ,
-    input logic [31:0]out_en,out_vld,
+    input  var[15:0] data_in [31:0] ,
+    input logic [31:0]out_vld,
     input logic fifo_en,clk,nrst,
     output var [15:0] data_out [31:0]
 );
@@ -75,7 +67,6 @@ genvar i;
         .clk(clk),
         .nrst(nrst),
         .fifo_en(fifo_en),
-        .out_en(out_en[i]),
         .data_in(data_in[i]),
         .data_out(data_out[i]),
         .out_vld(out_vld[i])
