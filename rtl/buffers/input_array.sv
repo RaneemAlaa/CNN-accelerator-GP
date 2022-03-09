@@ -71,7 +71,7 @@ genvar i;
   generate
     for (i = 0; i < 32; i = i + 1) 
     begin:input_buffer
-      weight_buffer #(.I(i)) input_buffer (
+      input_buffer #(.I(i)) input_buffer (
         .clk(clk),
         .nrst(nrst),
         .fifo_en(fifo_en),
