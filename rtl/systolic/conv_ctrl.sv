@@ -1,11 +1,10 @@
 module conv_ctrl #(
-    parameter col = 32
+    parameter col = 32 , row = 32
   )(
     input  logic clk, nrst, conv_ctrl,
     input  logic [4:0] weight_dim,
     output logic conv_finish, w_ps, 
-    output logic [col-1:0] out_en,
-    output logic [31:0]input_en
+    output logic [row-1:0] input_en
   );
 
   enum logic [1:0] {  loading_weight = 2'b01,
@@ -13,7 +12,7 @@ module conv_ctrl #(
 
   logic[4:0] current_count, next_count;
   logic[4:0] current_i,next_i; //!number of PEs
-  logic[5:0] next_clock_counter,current_clock_counter;//! signal detrmine when we will disenable the the systollic to take input 
+  logic[5:0] next_clock_counter,current_clock_counter;//! signal detrmine when we will disenable the the systolic to take input 
   logic first_out; 
 
   always_ff @(posedge clk, negedge nrst) 
@@ -42,27 +41,39 @@ module conv_ctrl #(
     next_i=current_i;
     next_clock_counter=current_clock_counter;
 
-	  unique case(current_state) 
+	  case(current_state) 
 			loading_weight: 
       begin
-        next_state  = (conv_ctrl)? loading_PS : loading_weight;
+        if (conv_ctrl) 
+        begin
+          next_state  = loading_PS ;
+        end
+        else
+        begin
+          next_state = loading_weight;
+        end
+        //next_state  = (conv_ctrl)? loading_PS : loading_weight;
         w_ps        = 1;
         conv_finish = 0;
         first_out   = 0;
+	      input_en = 32'b0;
       end
 
       loading_PS:
       begin
         w_ps = 0;
-         next_clock_counter=next_clock_counter+1;
-         if (next_clock_counter > 28 && next_clock_counter <55)
+        input_en = 32'b1;
+        next_clock_counter = next_clock_counter+1;
+        if (next_clock_counter > 28 && next_clock_counter <55)
           begin 
-           input_en [next_i] = 1;
- 					 next_i=current_i+1;
+		        input_en [next_i] = 0;
+ 		        next_i=current_i+1;
           end   
         if ( (next_count < weight_dim) && !first_out ) begin
           next_state  = loading_PS ;
           next_count  = current_count + 1;
+          conv_finish = 0;
+          first_out   = 0;
         end 
         else
         begin
@@ -75,7 +86,8 @@ module conv_ctrl #(
       begin
         w_ps        = 1;
         conv_finish = 0;
-        first_out   = 0;        				
+        first_out   = 0;
+        input_en    = 32'b0;      				
       end
     endcase
 	end

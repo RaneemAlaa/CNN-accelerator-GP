@@ -1,10 +1,10 @@
 module ctrl_cnn(
   input  logic clk, nrst,
-  input  logic conv_finish,  //! output of conv ctrl indicates that convlution is finshed 
-  input  logic pu_finish ,   //! output of PU ctrl indicates that mapping is finshed 
-  input  logic pooling_finish, //! output of pooling ctrl indicates that pooling is finshed 
-  input  logic [13:0] op_code_i, //! [0:2] operation , [3:8] number of filters , [9:13] weight dimension
-  output logic pu_en,conv_ctrl,pooling_ctrl, //! sent to parts of accelerator to start the operation 
+  input  logic conv_finish,  //! output of conv ctrl indicates that the conv is finished
+  input  logic pu_finish ,   //! output of PU ctrl indicates that the mapping is finished
+  input  logic pooling_finish, //! output of pooling ctrl indicates that the pooling is finished
+  input  logic [13:0] op_code_i, //! [2:0] operation , [8:3] number of filters , [13:9] weight dimension
+  output logic pu_en,conv_ctrl,pooling_ctrl, //!to start the operation after 1st output from last operation is ready
   output logic [31:0] weight_en, // weight_en = fifo_en
   output logic [5:0] weight_dim
 );
@@ -65,7 +65,7 @@ module ctrl_cnn(
       			pooling_ctrl = 0;
      			pu_en        = 0;
         		conv_ctrl    = 0;
-        		weight_en    ='0;
+        		weight_en    = 32'b0;
         		unique case(op_code_i[2:0])
 		  			3'b000:next_state = idle; 
           			3'b001:next_state = conv;
@@ -73,14 +73,16 @@ module ctrl_cnn(
           			3'b010:next_state = conv_pooling;
           			3'b110:next_state = conv_pooling_FC;
           			3'b111:next_state = out;	
-	      		endcase	
+	      		endcase
       		end
 
 		  	conv:
 		  	begin                             //filter buffering
-		    	pooling_ctrl = 0;
        			if (next_i < op_code_i[8:3]) // to make first buffer for filter on 
        			begin 
+					pu_en = 0;
+					conv_ctrl=0;
+					pooling_ctrl = 0;
 					unique case(current_state_2) 
   				  		loading_weight_element:
   						begin 
@@ -122,14 +124,16 @@ module ctrl_cnn(
 				else 
 				begin
 			    	pu_en          = 1;
-          			weight_en      = '0;	
+					pooling_ctrl   = 0;
+          			weight_en      = 32'b0;
+					conv_ctrl	   = 0;	
           			next_state     = conv;
 			    	next_count_img = current_count_img + 1;	
-				  	if (next_count_img > 7'd67)
+				  	if (next_count_img > 7'd133)			//(4*32+5)  to know when 1st output would be ready
 				  	begin
             			conv_ctrl  = 1;
             			pu_en      = (pu_finish)? 0 : 1;
-            			weight_en  = '0;
+            			weight_en  = 32'b0;
 				    	next_state = conv_finish? out : conv ;
           			end
 				end
@@ -138,13 +142,20 @@ module ctrl_cnn(
 		  	FC: 
 		  	begin 
         	next_state = out;
+			pu_en = 0;
+			conv_ctrl  = 0;
+			pooling_ctrl = 0;
+
       		end
 
       		conv_pooling:
 		  	begin                             //filter buffering
        			if (next_i < op_code_i[8:3]) // to make first buffer for filter on 
        			begin 
+					pu_en = 0;
 		      		pooling_ctrl = 0;
+					conv_ctrl  = 0;
+
 				  	unique case(current_state_2) 
   				  		loading_weight_element:
   						begin 
@@ -187,7 +198,7 @@ module ctrl_cnn(
 				else                           
 				begin
 					pu_en          = 1; 
-          			weight_en      = 0;
+          			weight_en      = 32'b0;
           			pooling_ctrl   = 0;
           			conv_ctrl      = 0;	
 		      		next_count_img = current_count_img + 1;
@@ -200,7 +211,7 @@ module ctrl_cnn(
               				next_count_conv = current_count_conv+1;
               				conv_ctrl       = 1;
               				pooling_ctrl    = 0;
-              				weight_en       = 0;
+              				weight_en       = 32'b0;
               				pu_en           = 1;
               				next_state      = conv_pooling;
             			end 
@@ -208,7 +219,7 @@ module ctrl_cnn(
             			begin
               				pu_en        = (pu_finish)? 0 : 1;
               				pooling_ctrl = 1;
-              				weight_en    = 0;
+              				weight_en    = 32'b0;
               				conv_ctrl    = (conv_finish)? 0 : 1;
 			        		next_state   = (pooling_finish)? out : conv_pooling ;
             			end
@@ -222,11 +233,22 @@ module ctrl_cnn(
         		pooling_ctrl=0;
         		pu_en = 0;
         		conv_ctrl=0;
-        		weight_en ='0;
+        		weight_en =32'b0;
         		next_count_img = 0;
         		next_count_conv=0;
         		next_i=0;
-      		end    		  
+      		end
+			default:
+			begin
+				next_state = idle;
+        		pooling_ctrl=0;
+        		pu_en = 0;
+        		conv_ctrl=0;
+        		weight_en =32'b0;
+        		next_count_img = 0;
+        		next_count_conv=0;
+        		next_i=0;
+			end  		  
 	  	endcase	
   	end   
 endmodule

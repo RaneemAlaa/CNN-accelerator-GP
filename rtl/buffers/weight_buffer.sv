@@ -2,7 +2,7 @@ module weight_buffer #(
   parameter data_width = 16
 ) (
   input  logic  clk, nrst, 
-  input  logic fifo_en,                    //!control signal to enable the FIFO storing the weight
+  input  logic  fifo_en,                    //!control signal to enable the FIFO storing the weight
   input  logic  [4:0] weight_dim,
   input  logic  [31:0] data_in,            //!weight from AXI
   output logic  [data_width-1:0] data_out, //!weights to systolic array
@@ -36,7 +36,7 @@ always_ff @(posedge clk, negedge nrst) begin
 
       store[ in_idx +: 32] <= data_in;      //store 2 elements
       in_idx <= (in_idx + 32);
-      if (in_idx == 192)
+      if (in_idx == 192)                  //223-32
       begin
         in_idx <= 0;  
       end
@@ -46,7 +46,7 @@ always_ff @(posedge clk, negedge nrst) begin
     begin
       out_idx <= (out_idx + 16);
       next_element_count <= current_element_count + 1;
-      if (out_idx == 208)
+      if (out_idx == 208)               //223-16
       begin
         out_idx <= 0;  
       end
