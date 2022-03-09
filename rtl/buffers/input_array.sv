@@ -2,7 +2,7 @@ module input_buffer #(
   parameter data_width = 16 ,I=0
 ) (
   input  logic  clk, nrst, fifo_en,
-  input  logic  [31:0] data_in,           //from AXI
+  input  logic  [data_width-1:0] data_in,           //from AXI
   output logic  [data_width-1:0] data_out,
   output logic out_vld
 );
@@ -61,10 +61,10 @@ endmodule
 module input_array#(
     
 parameter I=0) (
-    input  var[15:0] data_in [31:0] ,
+    input  var  [15:0] data_in [31:0] ,
     input logic [31:0]out_vld,
     input logic fifo_en,clk,nrst,
-    output var [15:0] data_out [31:0]
+    output var  [15:0] data_out [31:0]
 );
 
 genvar i;
