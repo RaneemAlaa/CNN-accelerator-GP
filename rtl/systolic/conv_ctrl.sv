@@ -4,7 +4,6 @@ module conv_ctrl #(
     input  logic clk, nrst, conv_ctrl,
     input  logic [4:0] weight_dim,
     output logic conv_finish, w_ps, 
-    output logic [col-1:0] out_en,
     output logic [row-1:0] input_en
   );
 
