@@ -9,7 +9,7 @@ module input_buffer #(
 
 logic [I:0] store;      // 1 element * 16 bits = 224
 logic  [7:0]bit_count,next_bit_count,in_idx,out_idx;
-logic [C:0] current_enable_count,next_enable_count; // ظبطي بس ال الكونت الي هتوقفي بيها الانبوت هتوقفيها امتي  
+
 always_ff @(posedge clk, negedge nrst) begin
   if (!nrst) 
   begin
@@ -24,12 +24,20 @@ always_ff @(posedge clk, negedge nrst) begin
     if (fifo_en)
     begin
       store[ in_idx +: 32] <= data_in;      //store 2 elements
-      in_idx <= (in_idx + 32) % 224;
+      in_idx <= (in_idx + 32);
+      if (in_idx == 192)
+      begin
+        in_idx <= 0;  
+      end
     end
     out_vld <= (bit_count >= 16 || fifo_en);
     if (out_vld)
     begin
-      out_idx <= (out_idx + 16) % 224;
+      out_idx <= (out_idx + 16);
+      if (out_idx == 208)
+      begin
+        out_idx <= 0;  
+      end
     end
   end
 end
@@ -46,7 +54,7 @@ always_comb begin
   end
 end
 
-assign data_out =  store[ out_idx +: 16 ] ;
+assign data_out = store[ out_idx +: 16 ];
   
 endmodule
 
