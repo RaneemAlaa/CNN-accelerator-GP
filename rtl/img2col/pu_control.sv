@@ -3,13 +3,13 @@ module PU_control#(
     parameter reg_num = 20 ,
     parameter address_num = 5 ,
     parameter weight_size = 25 
-  )(input logic [data_width-1:0] out_g [24:0],
+  )(input logic [data_width-1:0] out_g [weight_size-1:0],
     output logic [data_width-1:0] in_r [reg_num-1:0],
     input logic [data_width-1:0] out_r [reg_num-1:0],
-    input logic clk,nrst,
+    input logic clk,nrst,wr_ctrl_g,
     input logic start, 
     input logic [5:0] round ,
-    input logic [address_num-1:0] adrs_in1, adrs_in2,wr_ctrl_g,
+    input logic [address_num-1:0] adrs_in1, adrs_in2,
     output logic r_ctrl_g, wr_ctrl_r , r_ctrl_r, neighbour_out_flag , 
     output logic [data_width-1:0] neighbour_out [reg_num-1:0],
     output logic [data_width-1:0] out [weight_size-1:0] 
@@ -42,6 +42,7 @@ end
               wr_ctrl_r = 0;
               r_ctrl_r  = 0;
               r_ctrl_g  = 0;
+	    
                neighbour_out_flag = 0;
               next_state = start? write_g : idle;
 		    end 
@@ -57,13 +58,14 @@ end
 		    begin 
               wr_ctrl_r = 0;
               r_ctrl_r  = 1;
+
               r_ctrl_g  = 1;
                neighbour_out_flag = 1;
               next_state = write_r;
               if(round == 0) 
                begin
                 assign neighbour_out = {out_g[4:1], out_g[9:6], out_g[14:11], out_g[19:16], out_g[24:21]}; //kant 14
-                assign out = out_g;
+                assign out = {out_g};
                 
                end
               else 

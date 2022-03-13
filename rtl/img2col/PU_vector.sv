@@ -16,9 +16,10 @@ module pus_vector#(
  logic [data_width-1:0] neighbour_out [row-2:0][reg_num-1:0];        //out from pu[x] & in to pu[x+1]
  logic  neighbour_out_flag [row-2:0];
  logic  neighbour_in_flag  [row-2:0];
- logic [ address_num-1:0] wr_ctrl_g [row-2:0];
+ logic wr_ctrl_g [row-2:0];
  logic [data_width-1:0] Out[(28*weight_size)-1:0];
- //PU1
+ logic  [5:0] PU_No_lol;
+//PU1
  assign wr_ctrl_g[0] = (PU_No==0)?1:0;
  
 
@@ -31,8 +32,8 @@ module pus_vector#(
         .start(start),
         .round(round),
         .wr_ctrl_g(wr_ctrl_g[0]),
-        .adrs_in1(adrs_in1),
-        .adrs_in2(adrs_in2),
+        .adrs_in1(adrs_in2),/// adrs pu1 from control top module
+        .adrs_in2(adrs_in1),
         .new1(new1),
         .new2(new2),
         .neighbour_out(neighbour_out[0]),
@@ -42,7 +43,7 @@ module pus_vector#(
     for (i = 1; i < row; i = i + 1) 
     begin:PU
       assign    wr_ctrl_g[i]= (PU_No==i)?1:0;
-      PUs pu(
+      PUs pu (
         .clk(clk),
         .nrst(nrst),
         .start(start),
@@ -53,16 +54,20 @@ module pus_vector#(
         .new1(new1),
         .new2(new2),
         .neighbour_in(neighbour_out[i-1]),
-        .neighbour_in_flag(neighbour_in_flag[i-1]),
+        .neighbour_in_flag(neighbour_out_flag[i-1]),
         .neighbour_out(neighbour_out[i]),
         .neighbour_out_flag(neighbour_out_flag[i]),
 	      .out(Out[((i+1)*weight_size)-1:i*weight_size])
     );
     end
 endgenerate	 
-always
+always@(PU_No)
 begin
-case(PU_No)
+PU_No_lol <= PU_No;
+end
+always_comb
+begin
+case(PU_No_lol)
 0:out[weight_size-1:0]=Out[weight_size-1:0];
 1:out[weight_size-1:0]=Out[(2*weight_size)-1:weight_size];
 2:out[weight_size-1:0]=Out[(3*weight_size)-1:2*weight_size];
@@ -91,6 +96,7 @@ case(PU_No)
 25:out[weight_size-1:0]=Out[(26*weight_size)-1:25*weight_size];
 26:out[weight_size-1:0]=Out[(27*weight_size)-1:26*weight_size];
 27:out[weight_size-1:0]=Out[(28*weight_size)-1:27*weight_size];
+default:out<=out;
 endcase
 end
 endmodule 

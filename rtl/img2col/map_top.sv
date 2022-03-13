@@ -13,6 +13,9 @@ module map_top #(
 );
 logic [5:0] round,PU1_add,PU_No,row_No;
 
+logic [4:0] hoba;
+assign hoba = (row_No*5)+PU1_add;
+
   pus_vector pus_vector(
       .round(round),
       .clk(clk),
@@ -22,7 +25,7 @@ logic [5:0] round,PU1_add,PU_No,row_No;
       .new1(new1),
       .new2(new2),                            //data comes from AXI
       .adrs_in1(adrs_in1),
-      .adrs_in2(adrs_in2),
+      .adrs_in2(hoba),// used the useless port 
       .out(out)
   );
 

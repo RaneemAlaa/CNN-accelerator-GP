@@ -4,14 +4,14 @@ module PUs #(
             address_num = 5,
             reg_num     = 20
 ) (
-  input logic clk, nrst,start, neighbour_in_flag,
+   input  logic  clk, nrst,start, neighbour_in_flag,wr_ctrl_g,
   input logic [5:0]round,
-  input logic  [address_num-1:0] adrs_in1, adrs_in2,wr_ctrl_g,
+  input logic  [address_num-1:0] adrs_in1, adrs_in2,
   input logic  [data_width-1:0]  new1, new2,                       //data comes from AXI
   input logic  [data_width-1:0]  neighbour_in [reg_num-1:0],       //data from neighbour PU
   output logic [data_width-1:0]  neighbour_out [reg_num-1:0],      //data to neighbour PU
   output logic [data_width-1:0]  out [weight_size-1:0],
-  output logic neighbour_out_flag
+  output  logic neighbour_out_flag
 );
 
 logic  r_ctrl_g, wr_ctrl_r, r_ctrl_r, wr_ctrl_n, r_ctrl_n;
@@ -68,7 +68,7 @@ logic [data_width-1:0] out_r [reg_num-1:0];
     .r_ctrl_r(r_ctrl_r),
     .wr_ctrl_n(wr_ctrl_n),
     .r_ctrl_n(r_ctrl_n),
-    .neighbour_out_flag(neightor_out_flag), 
+    .neighbour_out_flag(neighbour_out_flag), 
     .neighbour_out(neighbour_out),
     .out(out) 
   );

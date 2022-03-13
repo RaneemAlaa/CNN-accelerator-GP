@@ -7,9 +7,9 @@ module PUs_control#(
    output logic [data_width-1:0] in_r [reg_num-1:0],// the error here that it was an input
     input logic [data_width-1:0] out_r [reg_num-1:0],
     input logic [data_width-1:0] out_n [reg_num-1:0],
-    input logic clk,nrst,start,neighbour_in_flag,
+    input logic clk,nrst,start,neighbour_in_flag,wr_ctrl_g ,
     input logic [5:0] round,
-    input logic [address_num-1:0] adrs_in1, adrs_in2,wr_ctrl_g ,
+    input logic [address_num-1:0] adrs_in1, adrs_in2,
     output logic  r_ctrl_g, wr_ctrl_r,r_ctrl_n, wr_ctrl_n , r_ctrl_r, neighbour_out_flag, 
     output logic [data_width-1:0] neighbour_out [reg_num-1:0],
     output logic [data_width-1:0] out [weight_size-1:0] 
@@ -43,7 +43,8 @@ end
               wr_ctrl_r = 0;
               r_ctrl_r = 0;
               r_ctrl_g = 0;
-               neighbour_out_flag= 0;
+             
+		 neighbour_out_flag= 0;
               next_state = start? write_g : idle;
 		    end 
        write_g: 
