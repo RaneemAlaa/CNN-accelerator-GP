@@ -17,8 +17,8 @@ module PIPO #(
           end
       else 
         begin
-          out <= (r_ctrl && !wr_ctrl ) ? registers : out;
-          registers <= (wr_ctrl && !r_ctrl) ? in : registers;
+        registers <= (wr_ctrl &&! r_ctrl) ? in : registers;
+        out <= (r_ctrl && !wr_ctrl ) ? registers : out;
         end
     end
 endmodule

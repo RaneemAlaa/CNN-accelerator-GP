@@ -1,4 +1,5 @@
-module Map_Control(
+module Map_Control#( parameter row = 28)(
+  input logic  neighbour_out_flag [row-2:0],
   input logic clk,nrst,start,
   output logic [5:0] current_round,current_PU1_add,current_PU_No,current_row_No
 );
@@ -93,17 +94,17 @@ logic [5:0] next_PU1_add, next_PU_No, next_row_No, next_round ;
              end
            else
             begin
-          if( next_PU_No == 5'd27)
+          if( next_PU_No == 6'd27)
             begin
               next_PU_No   = 0;
               next_PU1_add = 0;
               next_round  = next_round + 1;
 		          next_state=current_state;
             end
-          else 
+          else if((next_round == 6'd27&&current_PU_No==27) || neighbour_out_flag[current_PU_No]==1) 
           begin
             next_PU_No = next_PU_No + 1;
-            if( next_round == 4'd27)
+            if( next_round == 6'd27)
             begin
             next_state = Idle;
             next_round = current_round;

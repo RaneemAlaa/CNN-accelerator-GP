@@ -4,7 +4,7 @@ module regfile2in #(
                address_num= 5
 ) (
     input  logic clk, nrst,  r_ctrl,wr_ctrl,
-    input  logic [data_width-1:0] in1, in2,
+    input  logic [data_width-1:0] in1, 
     input  logic [address_num-1:0] adrs_in1, adrs_in2,                   //address bus
     output logic [data_width-1:0] out [reg_num-1:0]// original was [4:0] but it's connection with out_g is fatal error cause out_g is [24:0]
 );
@@ -20,7 +20,6 @@ module regfile2in #(
 		else
       begin
         registers[adrs_in1] <= (wr_ctrl && !r_ctrl) ? in1 : registers[adrs_in1];
-        registers[adrs_in2] <= (wr_ctrl && !r_ctrl) ? in2 : registers[adrs_in2];
         out <= (r_ctrl && !wr_ctrl ) ? registers : out;
       end
   end
