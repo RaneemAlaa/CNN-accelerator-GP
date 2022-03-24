@@ -1,6 +1,7 @@
 module pooling_top
   #(  parameter data_width = 16,
-      parameter col = 32
+      parameter col = 32,
+      parameter address_num = 4
     )
    (   
        input clk,nrst,start,
@@ -10,8 +11,13 @@ module pooling_top
        output pooling_done[col-1:0]
     );
 
-logic [data_width-1:0] x,z,out[col-1];
-logic mux_en[col-1],Wr_ctrl1[col-1],Wr_ctrl2[col-1],add_in1[col-1],add_in2[col-1],add_out[col-1];
+logic [data_width-1:0] x [col-1];
+logic [data_width-1:0]z[col-1];
+logic [data_width-1:0]out[col-1];
+logic mux_en[col-1],Wr_ctrl1[col-1],Wr_ctrl2[col-1];
+logic [address_num-1:0]add_in1[col-1];
+logic [address_num-1:0]add_in2[col-1];
+logic [address_num-1:0]add_out[col-1];
 
 //instantiation and connection of all components of pooling unit excluding control
 
@@ -68,9 +74,9 @@ generate
      begin:latch_vector
 
 pooling_pipline pipeline(
-         .enable(en[j]),
-	 .clk(clk),
-	 .nrst(nrst),
+         .enable(en[j-1]),
+     .clk(clk),
+     .nrst(nrst),
 
          .out_adrs1 (add_in1[j]), 
          .out_adrs2 (add_in2[j]),
@@ -87,7 +93,7 @@ pooling_pipline pipeline(
          .in_wr_ctrl1 (Wr_ctrl1[j-1]),
          .in_wr_ctrl2 (Wr_ctrl2[j-1]),
          .in_pool_done (pooling_done[j-1]) );
-	
-	end:latch_vector
+    
+    end:latch_vector
 endgenerate
 endmodule
