@@ -1,6 +1,6 @@
 module regfilePooling#(
     parameter data_width = 16 ,
-    reg_num = 16 , 
+    reg_num = 32 , 
     address_num = 4 
 )(
     input  logic clk, nrst, wr_ctrl1,wr_ctrl2,
@@ -27,4 +27,4 @@ always_ff @ (posedge clk, negedge nrst)
       end
   end
 
-endmodule 
+endmodule
