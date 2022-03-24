@@ -1,6 +1,6 @@
 module max_avg_pooling
   #(
-     parameter data_width = 8
+     parameter data_width = 16
    )
    (
      input logic [data_width-1:0] in1, in2,
