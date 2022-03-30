@@ -46,23 +46,24 @@ module conv_ctrl #(
       begin
         if (conv_ctrl) 
         begin
+	  input_en = 32'hFFFFFFFF;	
           next_state  = loading_PS ;
         end
         else
         begin
           next_state = loading_weight;
+           input_en = 32'h00000000;
         end
         //next_state  = (conv_ctrl)? loading_PS : loading_weight;
         w_ps        = 1;
         conv_finish = 0;
         first_out   = 0;
-	      input_en = 32'b0;
+	     
       end
 
       loading_PS:
       begin
         w_ps = 0;
-        input_en = 32'b1;
         next_clock_counter = next_clock_counter+1;
         if (next_clock_counter > 28 && next_clock_counter <55)
           begin 
