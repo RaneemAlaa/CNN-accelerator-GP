@@ -4,7 +4,7 @@ module pooling_control #(
 )(
     input  logic clk, nrst,start,
     output  logic [address_num-1:0] current_adrs1, current_adrs2 , current_adrs_out ,  
-    output logic mux_en ,wr_ctrl1,wr_ctrl2,pool_done 
+    output logic mux_en ,wr_ctrl1,wr_ctrl2,pool_done ,pooling_finish ; 
 );
 //the required memory is (matrix size/2)+1  here we need (28/2)+1 = 15    but here we use memory its legth is 16 so there is one position didn't used 
 // imp note the memory here is consists of 16 palces we use the first 14'th of them to stor the out of pooling two elemnts in buffering stage 
@@ -25,7 +25,7 @@ always_ff @(posedge clk, negedge nrst) begin
             current_adrs2 <= 0 ;
             current_adrs_out <= 0 ;
             current_col_counter  <= 0 ;
-            current_row_counter <= 0; 
+            current_row_counter <= 0;
         end
     else 
         begin
@@ -50,6 +50,7 @@ always_comb
                     next_col_counter  = 0 ; 
                     next_row_counter = 0;
                     pool_done=0;
+                    pooling_finish=0;
                     if(start)
                         begin
                             next_state = buffering;
@@ -63,7 +64,7 @@ always_comb
                 begin
                     next_col_counter =current_col_counter +1;
                     mux_en=0;
-                    
+                    pooling_finish=0;
                     if(current_col_counter  == sys_width ) 
                         begin 
                             next_state = working ;
@@ -108,10 +109,14 @@ always_comb
                     next_col_counter =current_col_counter +1;
                      if(current_col_counter  == sys_width ) 
                         begin
-                            if(current_row_counter==sys_width)
+                            if(current_row_counter==sys_width)begin 
                             next_state = idle;
-                            else
-                            next_state=buffering;
+                            pooling_finish = 1 ; ///////  add the finish signal   
+                            end
+                            else begin 
+                            next_state=buffering;      
+                            pooling_finish=0;//////// 
+                            end 
                             
                             next_col_counter =0; 
                             next_row_counter =current_row_counter+1;
@@ -125,7 +130,7 @@ always_comb
                             next_adrs1=4'hf;
                             pool_done=0;                           
                         end
-                    if( (current_col_counter [0]) ) // for odd counter read xF
+                    else if( (current_col_counter [0]) ) // for odd counter read xF ////////
                         begin
                             wr_ctrl1=0;
                             wr_ctrl2=0;
