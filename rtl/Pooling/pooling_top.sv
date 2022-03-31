@@ -8,7 +8,8 @@ module pooling_top
        input en[col-1:0],
        input [data_width-1:0]sys_out[col-1:0],
        inout [data_width-1:0] pooling_out[col-1:0],
-       output pooling_done[col-1:0]
+       output pooling_done[col-1:0],
+       output pooling_finish[col-1:0];
     );
 
 logic [data_width-1:0] x [col-1];
@@ -63,7 +64,8 @@ pooling_control control(
          .mux_en(mux_en[0]),
          .wr_ctrl1(Wr_ctrl1[0]),
          .wr_ctrl2(Wr_ctrl2[0]),
-         .pool_done(pooling_done[0])
+         .pool_done(pooling_done[0],
+         .pooling_finish(pooling_finish[0]))
     );
 
     //instantiation of latches responsible for delay of control singal to reach each pooling unit at correct time
