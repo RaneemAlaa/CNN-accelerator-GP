@@ -63,7 +63,7 @@ always_comb
             buffering :
                 begin
                     next_col_counter =current_col_counter +1;
-                    mux_en=0;
+                    mux_en=1;
                     pooling_finish=0;
                     if(current_col_counter  == sys_width ) 
                         begin 
@@ -145,7 +145,7 @@ always_comb
                              wr_ctrl1=1;
                              wr_ctrl2=0;
                              next_adrs1=4'hf;
-                             next_adrs2=(current_col_counter  >> 1)-1;
+                             next_adrs_out=(current_col_counter  >> 1)-1;
                              pool_done=0;
                         end    
                 end
