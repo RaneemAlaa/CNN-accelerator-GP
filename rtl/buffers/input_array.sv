@@ -8,7 +8,7 @@ module input_buffer #(
 );
 
 logic [I-1:0] store;      // 1 element * 16 bits
-logic  [7:0]bit_count,next_bit_count,in_idx,out_idx;
+logic  [8:0]bit_count,next_bit_count,in_idx,out_idx;
 logic out_en;
 
 always_ff @(posedge clk, negedge nrst) begin
@@ -32,7 +32,7 @@ always_ff @(posedge clk, negedge nrst) begin
       begin
         in_idx <= 0; 
       end
-      if (in_idx == (I-2*data_width))
+      if (in_idx == (I-data_width))
       begin
         out_en <=1; 
       end
