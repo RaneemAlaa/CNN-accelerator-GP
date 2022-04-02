@@ -1,9 +1,9 @@
 module systolic_vector
-  #(parameter width=8 , row = 4)(
-  input clk_in1, nrst_in1, ctrl_in1,
-        weight_en,in_en[row-1:0],[width-1:0] weight_input1,
-        [width-1:0] feature_input[row-1:0],
-  output logic out_in[row-1:0],
+  #(parameter width=16 , row = 32)(
+  input clk_in1, nrst_in1, ctrl_in1,weight_en,
+  input [row-1:0] in_en,
+  input [width-1:0] weight_input1,[width-1:0] feature_input[row-1:0],
+  output logic [row-1:0] out_in,
   output logic [width-1:0] vec_out , [width-1:0] feature_out1[row-1:0]
   );
 logic [width-1:0] weight[row:0];
