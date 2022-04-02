@@ -76,7 +76,7 @@ module input_array#(
 
 genvar i;
   generate
-    for (i = 0; i < 31; i = i + 1) 
+    for (i = 0; i < 32; i = i + 1) 
     begin:input_buffer
       input_buffer #(.I((i+1)*16)) input_buffer (
         .clk(clk),
