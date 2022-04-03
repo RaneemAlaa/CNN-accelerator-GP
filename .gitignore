@@ -8,3 +8,4 @@ rtl/img2col/PU_vector.sv.bak
 rtl/img2col/pu_control.sv.bak
 *.bak
 *.bak
+.DS_Store

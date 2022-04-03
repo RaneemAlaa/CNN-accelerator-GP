@@ -32,13 +32,13 @@ always_ff @(posedge clk, negedge nrst) begin
       begin
         in_idx <= 0; 
       end
-      if (in_idx == (I-data_width))
+      if (in_idx == (I-2*data_width))
       begin
         out_en <=1; 
       end
       
     end
-    out_vld <= (out_en);
+    out_vld <= out_en;
     if (out_vld)
     begin
       out_idx <= (out_idx + 16);
