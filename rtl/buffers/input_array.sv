@@ -73,10 +73,16 @@ module input_array#(
     input logic fifo_en,clk,nrst,
     output var  [15:0] data_out [31:0]
 );
-
+always_ff @(posedge clk) begin
+  if(fifo_en) begin
+    data_out[0] <= data_in[0];
+  end else begin
+    data_out[0] <=0 ;
+  end
+end
 genvar i;
   generate
-    for (i = 0; i < 32; i = i + 1) 
+    for (i = 1; i < 32; i = i + 1) 
     begin:input_buffer
       input_buffer #(.I((i+1)*16)) input_buffer (
         .clk(clk),
