@@ -1,10 +1,10 @@
 module pooling_control #(
     parameter   address_num = 4 , 
-                sys_width = 28 
+                sys_width = 27 
 )(
     input  logic clk, nrst,start,
     output  logic [address_num-1:0] current_adrs1, current_adrs2 , current_adrs_out ,  
-    output logic mux_en ,wr_ctrl1,wr_ctrl2,pool_done ,pooling_finish ; 
+    output logic mux_en ,wr_ctrl1,wr_ctrl2,pool_done ,pooling_finish 
 );
 //the required memory is (matrix size/2)+1  here we need (28/2)+1 = 15    but here we use memory its legth is 16 so there is one position didn't used 
 // imp note the memory here is consists of 16 palces we use the first 14'th of them to stor the out of pooling two elemnts in buffering stage 
@@ -63,7 +63,6 @@ always_comb
             buffering :
                 begin
                     next_col_counter =current_col_counter +1;
-                    mux_en=1;
                     pooling_finish=0;
                     if(current_col_counter  == sys_width ) 
                         begin 
@@ -77,9 +76,10 @@ always_comb
                         end
                     if(current_col_counter ==0)//first clock in buffering is different as there is still 1 operation left over from working
                         begin
+                            mux_en=0;
                             wr_ctrl1=1;
                             wr_ctrl2=0;
-                            next_adrs_out=(sys_width >> 1)-1;
+                            next_adrs_out=(sys_width >> 1);
                             next_adrs1=4'hf;
                             if(next_row_counter==0)
                             pool_done=0;
@@ -88,24 +88,26 @@ always_comb
                         end
                     else if( (current_col_counter [0]) ) // for odd counter read reg xF "the last one" 
                         begin
+                            mux_en=1;
                             wr_ctrl1=0;
-                            wr_ctrl2=0;
+                            wr_ctrl2=1;
                             next_adrs_out=4'hf;
                             pool_done=0;
                         end   
-                    else       // for even counter write reg (clk/2)-1 and reg xF
+                    else       // for even counter write reg (clk/2) and reg xF
                         begin
+                            mux_en=1;
                             wr_ctrl1=1;
-                            wr_ctrl2=1;
+                            wr_ctrl2=0;
                             next_adrs1=4'hf;  // always the same place the last elemnt 
-                            next_adrs2=(current_col_counter  >> 1)-1; // the first element in the memory and it will rais every odd clocks 
+                            next_adrs2=(current_col_counter  >> 1); // the first element in the memory and it will rais every odd clocks 
                             pool_done=0;
                         end
                     
                 end
             working :
                 begin
-                    mux_en=!(current_col_counter [0]);
+                    mux_en=(current_col_counter [0]);
                     next_col_counter =current_col_counter +1;
                      if(current_col_counter  == sys_width ) 
                         begin
@@ -126,8 +128,9 @@ always_comb
                         begin
                             wr_ctrl1=1;
                             wr_ctrl2=1;
-                            next_adrs2=(sys_width >> 1)-1;
+                            next_adrs2=(sys_width >> 1);
                             next_adrs1=4'hf;
+                            next_adrs_out=4'h0;
                             pool_done=0;                           
                         end
                     else if( (current_col_counter [0]) ) // for odd counter read xF ////////
@@ -135,17 +138,17 @@ always_comb
                             wr_ctrl1=0;
                             wr_ctrl2=0;
                             next_adrs_out=4'hf;
-                            if(!(current_col_counter ==1))
-                                pool_done=1;
-                            else
-                                pool_done=0;
+                            pool_done=0;
                         end    
                     else  // for even counter write xF and read reg (clk/2)-1
                         begin
                              wr_ctrl1=1;
                              wr_ctrl2=0;
                              next_adrs1=4'hf;
-                             next_adrs_out=(current_col_counter  >> 1)-1;
+                             next_adrs_out=(current_col_counter  >> 1);
+                         if(!(current_col_counter ==1))
+                             pool_done=1;
+                         else
                              pool_done=0;
                         end    
                 end

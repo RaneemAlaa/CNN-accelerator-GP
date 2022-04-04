@@ -9,12 +9,12 @@ module pooling_top
        input [data_width-1:0]sys_out[col-1:0],
        inout [data_width-1:0] pooling_out[col-1:0],
        output pooling_done[col-1:0],
-       output pooling_finish[col-1:0];
+       output pooling_finish[col-1:0]
     );
 
 logic [data_width-1:0] x [col-1];
 logic [data_width-1:0]z[col-1];
-logic [data_width-1:0]out[col-1];
+logic [data_width-1:0]next_out[col-1];
 logic mux_en[col-1],Wr_ctrl1[col-1],Wr_ctrl2[col-1];
 logic [address_num-1:0]add_in1[col-1];
 logic [address_num-1:0]add_in2[col-1];
@@ -25,9 +25,18 @@ logic [address_num-1:0]add_out[col-1];
 genvar i;
 generate
     for(i=0;i<32;i=i+1)
-    begin:pooling_unit 
+    begin:pooling_unit
 
-         assign x[i] =(mux_en[i])?sys_out[i]:out[i]; // The mux that decides whether the input for the pooling operation will be the output of last operation or systolic array
+    always_ff @(posedge clk or negedge nrst) begin
+        if(!nrst)
+            next_out[i]<=0;
+        else 
+            next_out[i]<=pooling_out[i];
+        
+    end
+
+         assign x[i] =(mux_en[i])?sys_out[i]:next_out[i]; // The mux that decides whether the input for the pooling operation will be the output of last operation or systolic array
+
 //instantiation of the reg file 32 times
 regfilePooling reg_file_Pooling(
             .clk(clk),
@@ -64,8 +73,8 @@ pooling_control control(
          .mux_en(mux_en[0]),
          .wr_ctrl1(Wr_ctrl1[0]),
          .wr_ctrl2(Wr_ctrl2[0]),
-         .pool_done(pooling_done[0],
-         .pooling_finish(pooling_finish[0]))
+         .pool_done(pooling_done[0]),
+         .pooling_finish(pooling_finish[0])
     );
 
     //instantiation of latches responsible for delay of control singal to reach each pooling unit at correct time
