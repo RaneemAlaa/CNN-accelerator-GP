@@ -15,7 +15,8 @@ logic [4:0] current_col_counter  , next_col_counter,current_row_counter,next_row
 enum logic [1:0] {
                     idle = 2'b00,
                     buffering = 2'b01,  
-                    working = 2'b10 }current_state,next_state;
+                    working = 2'b10,
+                    pooling_finished = 2'b11 }current_state,next_state;
 
 always_ff @(posedge clk, negedge nrst) begin
     if(!nrst)
@@ -44,9 +45,9 @@ always_comb
 
             idle : 
                 begin
-                    next_adrs1 = 0 ; 
+                    next_adrs1 = 4'hf ; 
                     next_adrs2 = 0 ;
-                    next_adrs_out = 0 ;
+                    next_adrs_out = 4'hf ;
                     next_col_counter  = 0 ; 
                     next_row_counter = 0;
                     pool_done=0;
@@ -76,16 +77,23 @@ always_comb
                         end
                     if(current_col_counter ==0)//first clock in buffering is different as there is still 1 operation left over from working
                         begin
-                            mux_en=0;
+                            //mux_en=0;
                             wr_ctrl1=1;
                             wr_ctrl2=0;
-                            next_adrs_out=(sys_width >> 1);
+                            //next_adrs_out=(sys_width >> 1);
                             next_adrs1=4'hf;
-                            if(next_row_counter==0)
+                            if(next_row_counter==0) //first row won't have an output but every other one will as it generates last output left from working state
+                            begin
                             pool_done=0;
-                            else
+                            mux_en=1;
+                            next_adrs_out=4'hf;
+                            end
+                            else begin
                             pool_done=1;
-                        end
+                            mux_en=0;
+                            next_adrs_out=(sys_width >> 1);
+                            end
+                        end 
                     else if( (current_col_counter [0]) ) // for odd counter read reg xF "the last one" 
                         begin
                             mux_en=1;
@@ -112,12 +120,12 @@ always_comb
                      if(current_col_counter  == sys_width ) 
                         begin
                             if(current_row_counter==sys_width)begin 
-                            next_state = idle;
-                            pooling_finish = 1 ; ///////  add the finish signal   
+                            next_state = pooling_finished;
+                            //pooling_finish = 1 ; ///////  add the finish signal   
                             end
                             else begin 
                             next_state=buffering;      
-                            pooling_finish=0;//////// 
+                            //pooling_finish=0;//////// 
                             end 
                             
                             next_col_counter =0; 
@@ -151,6 +159,17 @@ always_comb
                          else
                              pool_done=0;
                         end    
+                end
+             pooling_finished:
+                begin
+                    mux_en=0;
+                    wr_ctrl1=1;
+                    wr_ctrl2=0;
+                    next_adrs_out=(sys_width >> 1);
+                    next_adrs1=4'hf;
+                    pooling_finish = 1 ;
+                    pool_done = 1 ;
+                    next_state = idle;
                 end
         endcase
     end
