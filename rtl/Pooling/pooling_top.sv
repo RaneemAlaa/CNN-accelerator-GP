@@ -16,8 +16,7 @@ logic [data_width-1:0] x [col-1];
 logic [data_width-1:0]z[col-1];
 logic [data_width-1:0]next_out[col-1];
 logic mux_en[col-1],Wr_ctrl1[col-1],Wr_ctrl2[col-1];
-logic [address_num-1:0]add_in1[col-1];
-logic [address_num-1:0]add_in2[col-1];
+logic [address_num-1:0]add_in[col-1];
 logic [address_num-1:0]add_out[col-1];
 
 //instantiation and connection of all components of pooling unit excluding control
@@ -45,8 +44,7 @@ regfilePooling reg_file_Pooling(
             .wr_ctrl2(Wr_ctrl2[i]),
             .in1(sys_out[i]),
             .in2(pooling_out[i]),
-            .adrs_in1(add_in1[i]),
-            .adrs_in2(add_in2[i]),
+            .adrs_in(add_in[i]),
             .adrs_out(add_out[i]),
             .out(z[i])
         );
@@ -67,9 +65,8 @@ pooling_control control(
          .clk(clk),
          .nrst(nrst),
          .start(start),
-         .current_adrs1(add_in1[0]),
-         .current_adrs2(add_in2[0]) ,
-         .current_adrs_out(add_out[0]),
+         .adrs(add_in[0]),
+         .adrs_out(add_out[0]),
          .mux_en(mux_en[0]),
          .wr_ctrl1(Wr_ctrl1[0]),
          .wr_ctrl2(Wr_ctrl2[0]),
@@ -89,16 +86,14 @@ pooling_pipline pipeline(
      .clk(clk),
      .nrst(nrst),
 
-         .out_adrs1 (add_in1[j]), 
-         .out_adrs2 (add_in2[j]),
+         .out_adrs (add_in[j]), 
          .out_adrs_out (add_out[j]), 
          .out_mux_en (mux_en[j]),
          .out_wr_ctrl1 (Wr_ctrl1[j]),
          .out_wr_ctrl2 (Wr_ctrl2[j]),
          .out_pool_done (pooling_done[j]),
 
-         .in_adrs1 (add_in1[j-1]),
-         .in_adrs2 (add_in2[j-1]),
+         .in_adrs (add_in[j-1]),
          .in_adrs_out (add_out[j-1]),
          .in_mux_en (mux_en[j-1]),
          .in_wr_ctrl1 (Wr_ctrl1[j-1]),
