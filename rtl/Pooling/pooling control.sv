@@ -100,7 +100,7 @@ always_comb
                         begin
                             mux_en=1;
                             wr_ctrl1=0;
-                            wr_ctrl2=0;
+                            wr_ctrl2=1;
                             adrs_out=4'hf;
                             pool_done=0;
                             adrs=(current_col_counter  >> 1);
@@ -109,7 +109,7 @@ always_comb
                         begin
                             mux_en=1;
                             wr_ctrl1=1;
-                            wr_ctrl2=1;
+                            wr_ctrl2=0;
                             adrs_out=4'hf;
                             //adrs1=4'hf;  // always the same place the last elemnt 
                              // the first element in the memory and it will rais every odd clocks 
