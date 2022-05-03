@@ -1,0 +1,23 @@
+vlib work
+vlog pool_top.sv pooling_control.sv regfile.sv max_avg_module.sv pooling_pipeline.sv pooling_tb.sv                 +cover -covercells
+vsim -voptargs=+acc work.pooling_tb             -cover
+add wave -position insertpoint {sim:/pooling_tb/dut/pooling_unit[0]/reg_file_Pooling/*}
+add wave -position insertpoint {sim:/pooling_tb/dut/pooling_unit[0]/pooling/in1}
+add wave -position insertpoint {sim:/pooling_tb/dut/pooling_unit[0]/pooling/in2}
+add wave -position insertpoint	{sim:/pooling_tb/dut/pooling_unit[0]/pooling/out} 
+add wave -position insertpoint sim:/pooling_tb/dut/control/pool_done
+add wave -position insertpoint sim:/pooling_tb/dut/control/mux_en
+add wave -position insertpoint sim:/pooling_tb/dut/control/wr_ctrl1
+add wave -position insertpoint sim:/pooling_tb/dut/control/wr_ctrl2
+add wave -position insertpoint	sim:/pooling_tb/dut/pooling_done 
+add wave -position insertpoint sim:/pooling_tb/dut/control/current_col_counter
+add wave -position insertpoint sim:/pooling_tb/dut/control/next_row_counter
+add wave -position insertpoint sim:/pooling_tb/dut/control/next_state
+add wave -position insertpoint sim:/pooling_tb/dut/control/current_state
+add wave -position insertpoint {sim:/pooling_tb/dut/pooling_unit[0]/pooling/en}
+add wave -position insertpoint {sim:/pooling_tb/dut/pooling_unit[0]/pooling/max1}
+
+
+coverage save pooling_tb.ucdb -onexit
+
+run -all
