@@ -1,0 +1,12 @@
+vlib work
+vlog  systolic_top.sv conv_ctrl.sv vec_mod.sv pe_mod.sv sys_mod_tb.sv                 +cover -covercells
+vsim -voptargs=+acc work.sys_mod_tb            -cover
+add wave *
+add wave -position insertpoint sim:/sys_mod_tb/dut/ctrl_inst/next_clock_counter
+add wave -position insertpoint sim:/sys_mod_tb/dut/ctrl_inst/current_clock_counter
+add wave -position insertpoint sim:/sys_mod_tb/dut/ctrl_inst/current_index
+add wave -position insertpoint sim:/sys_mod_tb/dut/ctrl_inst/next_index
+add wave -position insertpoint sim:/sys_mod_tb/dut/ctrl_inst/input_en
+add wave -position insertpoint sim:/sys_mod_tb/dut/ctrl_inst/conv_finish
+coverage save sys_mod_tb.ucdb -onexit
+run -all
