@@ -2,6 +2,8 @@ module sys_mod_tb ;
 	parameter width = 16, col = 32, row = 32  ;
 	logic clk, nrst,conv_ctrl;
 	logic [col-1:0]weight_en;
+	logic [4:0] num_filter;
+ 	logic  out_en[col-1:0];
 	logic [4:0] weight_dim;
 	logic [width-1:0] weight_input2 [col-1:0] ;
 	logic [width-1:0] feature_input2 [row-1:0];
@@ -18,6 +20,8 @@ module sys_mod_tb ;
 		.weight_input2(weight_input2),
 		.feature_input2(feature_input2),
 		.systolic_out(systolic_out),
+		.out_en (out_en),
+		.num_filter    (num_filter),
 		.conv_finish(conv_finish)
 		);
 	int weight_in[24:0],weight_in2[24:0],in_row1 [783:0],in_row2 [783:0],in_row3 [783:0],in_row4 [783:0],in_row5 [783:0]
@@ -26,7 +30,8 @@ module sys_mod_tb ;
 	,in_row22 [783:0],in_row23 [783:0],in_row24 [783:0],in_row25 [783:0],mem[19599:0];
 	int sys_out_arr [$];
 	int sys_out_arr2 [$];
-
+	int correct_sys1 [783:0];
+	int correct_sys2 [783:0];
 initial begin
 	clk = 0;
  	forever 
@@ -40,6 +45,8 @@ weight_in2 = '{1,0,0,1,1,0,0,1,1,0,1,0,1,1,0,0,0,1,1,1,1,0,1,0,1};
 
 //$display("weight_in = %d",weight_in[2]);
  $readmemh("img_in.txt",mem);
+ $readmemh("check1.txt",correct_sys1);
+ $readmemh("check2.txt",correct_sys2);
  in_row1=mem[783:0];
  in_row2=mem[1567:784];
  in_row3=mem[2351:1568];
@@ -69,6 +76,7 @@ weight_in2 = '{1,0,0,1,1,0,0,1,1,0,1,0,1,1,0,0,0,1,1,1,1,0,1,0,1};
 nrst = 0;
 conv_ctrl = 0;
 weight_dim = 25; 
+num_filter =2;
 for (int i = 0; i < col; i++) begin
 	weight_input2[i] = $random;
 	weight_en[i] = 0;
@@ -93,8 +101,12 @@ end
 for (int i = 0; i < 808; i++) begin
 	if(conv_finish) begin
 		@(posedge clk);
-		sys_out_arr.push_back(systolic_out[0]);
-		sys_out_arr2.push_back(systolic_out[1]);
+		if (out_en[0]) begin
+			sys_out_arr.push_back(systolic_out[0]);
+		end
+		if (out_en[1]) begin
+			sys_out_arr2.push_back(systolic_out[1]);
+		end
 	end	
 	@(negedge clk);
 	weight_en[0] = 0;
@@ -307,10 +319,23 @@ for (int i = 0; i < 150; i++) begin
 	end*/
 	/*else*/ if(conv_finish) begin
 		@(posedge clk);
-		sys_out_arr.push_back(systolic_out[0]);
-		sys_out_arr2.push_back(systolic_out[1]);
+		if (out_en[0] && (sys_out_arr.size() < 784)) begin
+			sys_out_arr.push_back(systolic_out[0]);
+		end
+		if (out_en[1] && (sys_out_arr2.size() < 784)) begin
+			sys_out_arr2.push_back(systolic_out[1]);
+		end
+		
 	end	
 
+end
+for (int i = 0; i < 784; i++) begin
+	if (sys_out_arr[i] != correct_sys1[i]) begin
+		$display("error in index %d,wrong = %d, correct = %d ",i,sys_out_arr[i],correct_sys1[i]);
+	end
+	if (sys_out_arr2[i] != correct_sys2[i]) begin
+		$display("error in index %d,wrong = %d, correct = %d ",i,sys_out_arr2[i],correct_sys2[i]);
+	end
 end
 nrst = 0;
 #10
