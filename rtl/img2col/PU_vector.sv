@@ -5,20 +5,21 @@ module pus_vector#(
             address_num = 5,
             reg_num     = 20
 )(
-  input logic  clk,nrst,
+  input logic  clk,nrst,act,
   input logic  [5:0] PU_No,round, //  logic  [5:0] round[row-1 : 0] ; 
   input logic   start, 
-  input logic  [data_width-1:0]  new1, new2,                      //data comes from AXI
+  input logic  [data_width-1:0]  new1,// new2,                      //data comes from AXI
   input logic  [address_num-1:0] adrs_in1, adrs_in2,
   output logic [data_width-1:0] out[weight_size-1:0],
-  output logic  neighbour_out_flag [row-2:0]
-);
+  output logic  neighbour_out_flag [row-1:0],
+output logic t_flag[row-1:0]);
   logic  [5:0] PU_No_i,round_i[row-1 : 0] ; 
  logic [data_width-1:0] neighbour_Out [(28*reg_num)-1:0];
  logic [data_width-1:0] neighbour_out [reg_num-1:0];
+
  logic [data_width-1:0] neighbour_in [reg_num-1:0];       //out from pu[x] & in to pu[x+1]
- logic  neighbour_in_flag  [row-2:0];
- logic wr_ctrl_g [row-2:0];
+ logic  neighbour_in_flag  [row-1:0];
+ logic wr_ctrl_g [row-1:0];
  logic [data_width-1:0] Out[(28*weight_size)-1:0];
  logic  [5:0] PU_No_lol;
 //PU1
@@ -44,11 +45,15 @@ PU1 pu1(
     for (i = 1; i < row; i = i + 1) 
     begin:PU
 assign neighbour_in_flag[i] = neighbour_out_flag[i-1];
-      assign    wr_ctrl_g[i]= (PU_No==i)?1:0;
+     
+	
+	 assign    wr_ctrl_g[i]= (PU_No==i)?1:0;
       PUs pu (
+	.act(act),
         .clk(clk),
         .nrst(nrst),
         .start(start),
+	.t_flag(t_flag[i]),
         .round(round),
         .wr_ctrl_g(wr_ctrl_g[i]),
         .adrs_in1(adrs_in1),

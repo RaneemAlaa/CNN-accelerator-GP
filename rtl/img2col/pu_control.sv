@@ -1,4 +1,4 @@
-module PU_control#(
+ module PU_control#(
     parameter data_width  = 16,
     parameter reg_num = 20 ,
     parameter address_num = 5 ,
@@ -55,15 +55,17 @@ end
               r_ctrl_g  = 0;
                neighbour_out_flag = 0;
               next_state = ((adrs_in1==5'd24)&&wr_ctrl_g)? read_g : write_g;
+	   if(next_state == read_g)  neighbour_out_flag=1;
+			
 			  end 
        read_g:
 		    begin 
               wr_ctrl_r = 0;
               r_ctrl_r  = 1;
- 	      neighbour_out_flag = 0;
+ 	      neighbour_out_flag = 1;
               r_ctrl_g  = 1;
  
-              next_state = prepare_n;
+              next_state = write_r;
               if(round == 0) 
                begin
                 assign neighbour_out = {out_g[4:1], out_g[9:6], out_g[14:11], out_g[19:16], out_g[24:21]}; //kant 14
@@ -73,16 +75,10 @@ end
               else 
                begin 
                 assign neighbour_out = {out_g[24:21],neighbour_out_zeros};
-                assign out = {out_r, out_g[24:20]};
+                assign out = {out_g[24:20],out_r };
                end
           end 
-	prepare_n:
-			begin
-			
-		neighbour_out_flag = 1;
-		 next_state =prepare_r ;
-	 end
- prepare_r: next_state = write_r;  
+	
        write_r:
 			  begin 
               wr_ctrl_r = 1;
@@ -92,20 +88,20 @@ end
               next_state = write_g;
               if(round==0)
                 assign in_r = out_g[24:5];
-              else if(round==1)
-                assign in_r = {out_r[19:16],out_r[15:12],out_r[11:8],out_r[7:4],out_g[24:21]};
+              else //if(round==1)
+                assign in_r = {out_g[24:20],out_r[19:5]};
 	 
-              else if(round==2)
-                assign in_r = {out_r[19:16],out_r[15:12],out_r[11:8],out_r[3:0],out_g[24:21]};
+              //else if(round==2)
+              //  assign in_r = {out_r[19:16],out_r[15:12],out_r[11:8],out_r[3:0],out_g[24:21]};
 	
-	  else if(round==3)
-                assign in_r = {out_r[19:16],out_r[15:12],out_r[7:4],out_r[3:0],out_g[24:21]};
+//	  else if(round==3)
+//                assign in_r = {out_r[19:16],out_r[15:12],out_r[7:4],out_r[3:0],out_g[24:21]};
 	
-	  else if(round==4)
-                assign in_r = {out_r[19:16],out_r[11:8],out_r[7:4],out_r[3:0],out_g[24:21]};
+//	  else if(round==4)
+//                assign in_r = {out_r[19:16],out_r[11:8],out_r[7:4],out_r[3:0],out_g[24:21]};
 	
-          else 
-                assign in_r = {out_r[15:12],out_r[11:8],out_r[7:4],out_r[3:0],out_g[24:21]};
+//          else 
+//                assign in_r = {out_r[15:12],out_r[11:8],out_r[7:4],out_r[3:0],out_g[24:21]};
 	end 
 
 

@@ -8,7 +8,7 @@ module PIPO #(
 );
   logic [data_width-1:0] registers [reg_num-1:0];
 
-  always_ff @(posedge clk, negedge nrst)
+  always_ff @(negedge clk, negedge nrst)
     begin
       if (!nrst)
         begin
@@ -17,8 +17,8 @@ module PIPO #(
           end
       else 
         begin
-        registers <= (wr_ctrl &&! r_ctrl) ? in : registers;
-        out <= (r_ctrl && !wr_ctrl ) ? registers : out;
+        registers <= (wr_ctrl ) ? in : registers;
+        out <= (r_ctrl ) ? registers : out;
         end
     end
 endmodule
