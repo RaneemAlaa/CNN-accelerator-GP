@@ -79,7 +79,7 @@ end
  
 		 
 		//out_n={out_n[19:17],0,out_n[15:13],0,out_n[11:9],out_g[2],out_n[7:5],out_g[3],out_n[3:1],out_g[4]}
-               if(round == 0)  
+               if(round == 0||((round==1)&&(PU_No==0)))  
                  begin
 		assign out = {out_g[4],out_n[3:0],out_g[3],out_n[7:4],out_g[2],out_n[11:8],out_g[1],out_n[15:12],out_g[0],out_n[19:16]};
                assign neighbour_out = {out_g[0],out_n[19:17],out_g[1],out_n[15:13],out_g[2],out_n[11:9],out_g[3],out_n[7:5],out_g[4],out_n[3:1]};

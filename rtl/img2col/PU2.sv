@@ -23,6 +23,7 @@ logic [data_width-1:0] out_r [reg_num-1:0];
 
   //new reg
   regfile1in #(.reg_num(5)) g (.clk(clk),
+						.PU_No(PU_No),					
                                                 .nrst(nrst),
                                                 .wr_ctrl(wr_ctrl_g),
                                                 .r_ctrl(r_ctrl_g),

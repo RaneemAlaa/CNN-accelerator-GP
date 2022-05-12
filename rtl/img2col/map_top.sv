@@ -5,7 +5,7 @@ module map_top #(
             address_num = 5,
             reg_num     = 20
 ) (
-  input logic  clk,nrst,
+  input logic  clk,nrst,flag,
   input logic  start,
   input logic  [data_width-1:0]  new1, new2,                            //data comes from AXI
   output logic map_finish,

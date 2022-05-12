@@ -25,12 +25,18 @@ logic [5:0] next_PU1_add, next_PU_No, next_row_No, next_round ;
     end
     else
     begin
+	
       current_state   <= next_state;
       current_PU1_add <= next_PU1_add;
       current_PU_No   <= next_PU_No;
       current_row_No  <= next_row_No;
       current_round   <= next_round;
+if(  next_PU1_add ==0 && current_round>0)	
+act=1;
+else
+act=0;
     end
+	
   end
 
   always_comb
@@ -47,9 +53,12 @@ logic [5:0] next_PU1_add, next_PU_No, next_row_No, next_round ;
         next_PU_No   = 0;
         next_row_No  = 0;
         next_round   = 0;
+	//act=0;		
         if(start)
         begin
+	
           next_state = Buffering;
+	  map_finish=0;
         end
         else
         begin
@@ -75,6 +84,7 @@ logic [5:0] next_PU1_add, next_PU_No, next_row_No, next_round ;
             end
           else 
           begin
+
             next_PU_No = current_PU_No + 1;
             if( next_row_No == 4'd04)
             begin
@@ -96,36 +106,48 @@ logic [5:0] next_PU1_add, next_PU_No, next_row_No, next_round ;
               next_PU1_add = next_PU1_add + 1;
               next_state = current_state;
              end
-           else
-            begin
-         // if( neighbour_out_flag[27] == 1)
-	 if( current_PU_No >27)
+          // else
+         //   begin
+       //  if( t_flag[27] == 1)
+	if( next_PU_No > 27)
             begin
               next_PU_No   = 0;
               next_PU1_add = 0;
-              next_round  = next_round + 1;
+              next_round  = current_round + 1;
 		          next_state=current_state;
             end
           else if((next_round == 6'd27&&current_PU_No==27) || t_flag[current_PU_No]==1||neighbour_out_flag[0] == 1) 
           begin
             next_PU_No = current_PU_No + 1;
-            if( next_round == 6'd28)
+	    if( next_PU_No > 27)
+            begin
+              next_PU_No   = 0;
+              next_PU1_add = 0;
+              next_round  = current_round + 1;
+	     
+	    if( next_round == 6'd28)
             begin
 	    map_finish=1;
             next_state = Idle;
             next_round = current_round;
             end
             else
+	   begin
+	   next_state=current_state;
+	   //act=0;
+	     end
+	    end	
+          
+            else
             begin
 		map_finish=0;
               next_state = current_state;
             end
-          end
+          //end
         end
       end
-
 endcase 
-act = (current_round==next_round)?0:1;
+//act = (current_round==next_round)?0:1;
 //ack = (current_PU_No==next_PU_No)?0:1;
 end
 
