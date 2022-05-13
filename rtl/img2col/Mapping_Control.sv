@@ -31,7 +31,7 @@ logic [5:0] next_PU1_add, next_PU_No, next_row_No, next_round ;
       current_PU_No   <= next_PU_No;
       current_row_No  <= next_row_No;
       current_round   <= next_round;
-if(  next_PU1_add ==0 && current_round>0)	
+if(  next_PU1_add ==1 && next_round>0)	
 act=1;
 else
 act=0;

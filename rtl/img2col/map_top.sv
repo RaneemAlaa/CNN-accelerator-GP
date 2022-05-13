@@ -51,8 +51,17 @@ assign col_num=PU1_add+PU_No;
     .neighbour_out_flag (neighbour_out_flag),
     .act(act),
     .map_finish(map_finish) );
+
 //hreg in (.clk(clk),
  //   .nrst(nrst),
  //   .reg_in({new1,new2}),
  //   .reg_out(regin)	);
+    
+    flag_counter flag_counter (
+      .clk(clk),
+      .flag(t_flag),
+      .nrst(nrst),
+      .start(start),
+      .map_finish(map_finish)
+    );
 endmodule
