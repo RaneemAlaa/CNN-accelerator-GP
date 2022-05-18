@@ -59,7 +59,7 @@ assign col_num=PU1_add+PU_No;
     
     flag_counter flag_counter (
       .clk(clk),
-      .flag(t_flag),
+      .flag(flag),
       .nrst(nrst),
       .start(start),
       .map_finish(map_finish)

@@ -10,8 +10,8 @@ module flag_counter #(
     enum logic [1:0] {
                     idle = 2'b00,
                     count_to_159 = 2'b01,  
-                    count_to_4 = 2'b10,
-                    count_to_26 = 2'b11 }current_state,next_state;
+                    count_to_3 = 2'b10,
+                    count_to_27 = 2'b11 }current_state,next_state;
 
     always_ff @(posedge clk or negedge nrst) begin
         if (!nrst||map_finish) begin
@@ -38,7 +38,7 @@ module flag_counter #(
                     begin
                         flag=0;
                         if (current_count==159) begin
-                            next_state=count_to_4;
+                            next_state=count_to_3;
                             next_count=0;
                         end 
                         else begin
@@ -46,31 +46,30 @@ module flag_counter #(
                             next_count=current_count+1;
                         end
                     end
-                count_to_4:
+                count_to_3:
                     begin
                         
-                        if (current_count==4) begin
-                            next_state=count_to_26;
-                            flag=1;
+                        if (current_count==3) begin
+                            next_state=count_to_27;                          
                             next_count=0;
                         end 
                         else begin
-                            next_state=count_to_4;
-                            flag=0;
+				flag=0;
+                            next_state=count_to_3;
                             next_count=current_count+1;
                         end 
                     end
-                count_to_26:
+                count_to_27:
                     begin
                         
-                        if (current_count==26) begin
-                            next_state=count_to_4;
-                            flag=clk;
+                        if (current_count==27) begin
+                            next_state=count_to_3;
+                           
                             next_count=0;
                         end 
                         else begin
-                            next_state=count_to_26;
-                            flag=0;
+                            next_state=count_to_27;
+                          flag=clk;
                             next_count=current_count+1;
                         end 
                     end
