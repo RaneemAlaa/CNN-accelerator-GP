@@ -1,12 +1,12 @@
 module conv_ctrl #(
-    parameter col = 32 , row = 32
+    parameter col = 32 , row = 25
   )(
     input  logic clk, nrst, conv_ctrl,
     input  logic [4:0] weight_dim,
-    input  logic [4:0] num_filter,
+    input  logic [5:0] num_filter,
     output logic conv_finish, w_ps, 
     output logic [row-1:0] input_en,
-    output logic  out_en[col-1:0]
+    output logic  out_en[col-1:0]  // enable to pooling_units
   );
 
   enum logic [1:0] {  loading_weight = 2'b01,
@@ -77,7 +77,7 @@ module conv_ctrl #(
             input_en [next_i] = 0;
             next_i=current_i+1;
           end   
-        if ( (next_count < 32) && !first_out ) begin
+        if ( (next_count < row-1) && !first_out ) begin  // conv_finish and out_enable be 1 before first output exist to start pooling_units in next clock cycle
           next_state  = loading_PS ;
           next_count  = current_count + 1;
           conv_finish = 0;

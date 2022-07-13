@@ -1,12 +1,12 @@
 module systolic_top 
-	#(parameter width = 16, col = 32, row = 32 )
+	#(parameter width = 16, col = 32, row = 25 )
 	 ( 
 	input  logic clk, nrst,conv_ctrl,
 	input  logic [col-1:0] weight_en,
 	input  logic [4:0] weight_dim,
 	input  var logic  [width-1:0] weight_input2 [col-1:0] ,
 	input  var logic [width-1:0] feature_input2 [row-1:0],
-	input  logic [4:0] num_filter,
+	input  logic [5:0] num_filter,
 	output logic  out_en[col-1:0],
 	output logic [width-1:0] systolic_out [col-1:0],
 	output logic conv_finish

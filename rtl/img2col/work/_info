@@ -1,0 +1,326 @@
+m255
+K4
+z2
+!s11f vlog 2020.4 2020.10, Oct 13 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/MG/Desktop/last_update/mapping
+T_opt
+!s110 1655948999
+V[X2CE3nWn8@45gM_UX6lS2
+04 10 4 work map_top_tb fast 0
+=1-a4bb6d1601f4-62b3c6c7-1b3-2230
+o-quiet -auto_acc_if_foreign -work work +acc
+Z1 tCvgOpt 0
+n@_opt
+OL;O;2020.4;71
+vflag_counter
+Z2 DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
+Z3 !s110 1655947159
+!i10b 1
+!s100 5U<aO1L7^kDeagfaO2g;E3
+Z4 !s11b Dg1SIo80bB@j0V0VzS_@n1
+IP88XZH4BAOoze;9:SmcM81
+S1
+R0
+w1652905117
+8C:/Users/MG/Desktop/last_update/mapping/flag counter.sv
+FC:/Users/MG/Desktop/last_update/mapping/flag counter.sv
+!i122 12
+Z5 L0 1 80
+Z6 VDg1SIo80bB@j0V0VzS_@n1
+Z7 OL;L;2020.4;71
+r1
+!s85 0
+31
+Z8 !s108 1655947159.000000
+!s107 C:/Users/MG/Desktop/last_update/mapping/flag counter.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|C:/Users/MG/Desktop/last_update/mapping/flag counter.sv|
+!i113 0
+Z9 o-work work -sv -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R1
+vMap_Control
+R2
+R3
+!i10b 1
+!s100 nGmTkhO[ff4Ch=:JM?f1F1
+R4
+I5i0c94Qmcz:jzYN4=@af?0
+S1
+R0
+w1653851247
+8C:/Users/MG/Desktop/last_update/mapping/Mapping_Control.sv
+FC:/Users/MG/Desktop/last_update/mapping/Mapping_Control.sv
+!i122 14
+L0 1 154
+R6
+R7
+r1
+!s85 0
+31
+R8
+!s107 C:/Users/MG/Desktop/last_update/mapping/Mapping_Control.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|C:/Users/MG/Desktop/last_update/mapping/Mapping_Control.sv|
+!i113 0
+R9
+R1
+n@map_@control
+vmap_top
+R2
+R3
+!i10b 1
+!s100 cdEdlLg6d3]g8^Wi0Fk5g3
+R4
+Ia1;JCJ;9MocSEBXQ`]Kj?2
+S1
+R0
+w1653315425
+8C:/Users/MG/Desktop/last_update/mapping/map_top.sv
+FC:/Users/MG/Desktop/last_update/mapping/map_top.sv
+!i122 13
+L0 1 63
+R6
+R7
+r1
+!s85 0
+31
+R8
+!s107 C:/Users/MG/Desktop/last_update/mapping/map_top.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|C:/Users/MG/Desktop/last_update/mapping/map_top.sv|
+!i113 0
+R9
+R1
+vmap_top_tb
+R2
+!s110 1655947198
+!i10b 1
+!s100 <Y1edbBNd:]Ai4D4[0@[=0
+R4
+IHBl^93;5eb=CXAGgOL?kQ3
+S1
+R0
+w1655947191
+8C:/Users/MG/Desktop/last_update/mapping/map_top_tb (3).sv
+FC:/Users/MG/Desktop/last_update/mapping/map_top_tb (3).sv
+!i122 23
+L0 1 48
+R6
+R7
+r1
+!s85 0
+31
+!s108 1655947198.000000
+!s107 C:/Users/MG/Desktop/last_update/mapping/map_top_tb (3).sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|C:/Users/MG/Desktop/last_update/mapping/map_top_tb (3).sv|
+!i113 0
+R9
+R1
+vPIPO
+R2
+R3
+!i10b 1
+!s100 62Ii3L0@>fQGBHanV;i1P2
+R4
+IC^^6R9N4V42[_L^XB1BH93
+S1
+R0
+w1653851214
+8C:/Users/MG/Desktop/last_update/mapping/PIPO.sv
+FC:/Users/MG/Desktop/last_update/mapping/PIPO.sv
+!i122 15
+L0 1 24
+R6
+R7
+r1
+!s85 0
+31
+R8
+!s107 C:/Users/MG/Desktop/last_update/mapping/PIPO.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|C:/Users/MG/Desktop/last_update/mapping/PIPO.sv|
+!i113 0
+R9
+R1
+n@p@i@p@o
+vPU1
+R2
+R3
+!i10b 1
+!s100 >df_]5oO;N7cE8=64`8?G2
+R4
+I6UU]>BQhWQjaA2iDA_W9X1
+S1
+R0
+w1653169847
+8C:/Users/MG/Desktop/last_update/mapping/PU.sv
+FC:/Users/MG/Desktop/last_update/mapping/PU.sv
+!i122 16
+L0 1 61
+R6
+R7
+r1
+!s85 0
+31
+R8
+!s107 C:/Users/MG/Desktop/last_update/mapping/PU.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|C:/Users/MG/Desktop/last_update/mapping/PU.sv|
+!i113 0
+R9
+R1
+n@p@u1
+vPU_control
+R2
+R3
+!i10b 1
+!s100 F[j92GoUka24IP78UgVP`2
+R4
+Ia=:XN[`Tn=RoCRgzPXnz62
+S1
+R0
+w1653170115
+8C:/Users/MG/Desktop/last_update/mapping/pu_control.sv
+FC:/Users/MG/Desktop/last_update/mapping/pu_control.sv
+!i122 17
+L0 1 112
+R6
+R7
+r1
+!s85 0
+31
+R8
+!s107 C:/Users/MG/Desktop/last_update/mapping/pu_control.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|C:/Users/MG/Desktop/last_update/mapping/pu_control.sv|
+!i113 0
+R9
+R1
+n@p@u_control
+vPUs
+R2
+Z10 !s110 1655947160
+!i10b 1
+!s100 m`ea:RFWH1^3g5nheT2ZI2
+R4
+I3dcb7PG:B0Alg]YZNLYE^1
+S1
+R0
+w1653852084
+8C:/Users/MG/Desktop/last_update/mapping/PU2.sv
+FC:/Users/MG/Desktop/last_update/mapping/PU2.sv
+!i122 19
+R5
+R6
+R7
+r1
+!s85 0
+31
+R8
+!s107 C:/Users/MG/Desktop/last_update/mapping/PU2.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|C:/Users/MG/Desktop/last_update/mapping/PU2.sv|
+!i113 0
+R9
+R1
+n@p@us
+vPUs_control
+R2
+!s110 1655948993
+!i10b 1
+!s100 ]T=b<oP_V4kdoHicYlHgI3
+R4
+Ib4l0B1Nei<;j4BX2dfA>a3
+S1
+R0
+w1655948966
+8C:/Users/MG/Desktop/last_update/mapping/PUs_Control.sv
+FC:/Users/MG/Desktop/last_update/mapping/PUs_Control.sv
+!i122 25
+L0 1 180
+R6
+R7
+r1
+!s85 0
+31
+!s108 1655948993.000000
+!s107 C:/Users/MG/Desktop/last_update/mapping/PUs_Control.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|C:/Users/MG/Desktop/last_update/mapping/PUs_Control.sv|
+!i113 0
+R9
+R1
+n@p@us_control
+vpus_vector
+R2
+R3
+!i10b 1
+!s100 TeHOzSQL45I;YmL<MkiX50
+R4
+I[zHZlB=g1[cQEZ=oH1Nm]2
+S1
+R0
+w1653315831
+8C:/Users/MG/Desktop/last_update/mapping/PU_vector.sv
+FC:/Users/MG/Desktop/last_update/mapping/PU_vector.sv
+!i122 18
+L0 1 143
+R6
+R7
+r1
+!s85 0
+31
+R8
+!s107 C:/Users/MG/Desktop/last_update/mapping/PU_vector.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|C:/Users/MG/Desktop/last_update/mapping/PU_vector.sv|
+!i113 0
+R9
+R1
+vregfile1in
+R2
+R10
+!i10b 1
+!s100 hQ2Zc?@WLK7mEJ0F_Dljd2
+R4
+Inb^ZJcA_:JSLCXD5`T9ZB0
+S1
+R0
+w1653169930
+8C:/Users/MG/Desktop/last_update/mapping/refil1in.sv
+FC:/Users/MG/Desktop/last_update/mapping/refil1in.sv
+!i122 21
+L0 1 31
+R6
+R7
+r1
+!s85 0
+31
+Z11 !s108 1655947160.000000
+!s107 C:/Users/MG/Desktop/last_update/mapping/refil1in.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|C:/Users/MG/Desktop/last_update/mapping/refil1in.sv|
+!i113 0
+R9
+R1
+vregfile2in
+R2
+R10
+!i10b 1
+!s100 FdWSkK^fEED>HY6;>:Y:50
+R4
+I4]Yi9m8]MWN0MY;N6NX3g1
+S1
+R0
+w1653169925
+8C:/Users/MG/Desktop/last_update/mapping/regfile2in.sv
+FC:/Users/MG/Desktop/last_update/mapping/regfile2in.sv
+!i122 22
+L0 1 26
+R6
+R7
+r1
+!s85 0
+31
+R11
+!s107 C:/Users/MG/Desktop/last_update/mapping/regfile2in.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|C:/Users/MG/Desktop/last_update/mapping/regfile2in.sv|
+!i113 0
+R9
+R1

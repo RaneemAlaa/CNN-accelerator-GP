@@ -35,14 +35,14 @@ initial begin
 	nrst = 0;
 	start = 0;
 	new1 = 0;
-	
+	$readmemh("img.txt",mem,0,1023);
 	j = 0;
 	adrs_in1 = 0;
 	adrs_in2 = 0;
 	#2;
 	nrst = 1;
 	start = 1;
-	for (  int i = 0; i < 400; i = i+1) begin
+	for (  int i = 0; i < 1057; i = i+1) begin
 		adrs_in1 = j;
 		new1 = i;
 		

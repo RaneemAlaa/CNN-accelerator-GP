@@ -101,6 +101,9 @@ act=0;
 
     Working:
      begin
+	//if(!start)	begin
+	 //next_state = Idle;
+		//	end
            if( next_PU1_add < 6'd04 )
              begin
               next_PU1_add = next_PU1_add + 1;
@@ -125,7 +128,7 @@ act=0;
               next_PU1_add = 0;
               next_round  = current_round + 1;
 	     
-	    if( next_round == 6'd28)
+	    if( !start)
             begin
 	    map_finish=1;
             next_state = Idle;

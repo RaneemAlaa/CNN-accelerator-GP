@@ -1,0 +1,113 @@
+C:/Users/MG/Desktop/last_update/systolic/conv_ctrl.sv {1 {vlog -work work -vopt -sv -stats=none C:/Users/MG/Desktop/last_update/systolic/conv_ctrl.sv
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+-- Compiling module conv_ctrl
+
+Top level modules:
+	conv_ctrl
+
+} {} {}} {C:/Users/MG/Desktop/last_update/weight_input array/input_array.sv} {1 {vlog -work work -vopt -sv -stats=none {C:/Users/MG/Desktop/last_update/weight_input array/input_array.sv}
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+-- Compiling module input_array
+
+Top level modules:
+	input_array
+
+} {} {}} C:/Users/MG/Desktop/last_update/pooling/pooling_pipeline.sv {1 {vlog -work work -vopt -sv -stats=none C:/Users/MG/Desktop/last_update/pooling/pooling_pipeline.sv
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+-- Compiling module pooling_pipline
+
+Top level modules:
+	pooling_pipline
+
+} {} {}} C:/Users/MG/Desktop/last_update/pooling/regfile.sv {1 {vlog -work work -vopt -sv -stats=none C:/Users/MG/Desktop/last_update/pooling/regfile.sv
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+-- Compiling module regfilePooling
+
+Top level modules:
+	regfilePooling
+
+} {} {}} C:/Users/MG/Desktop/last_update/systolic/pe_mod.sv {1 {vlog -work work -vopt -sv -stats=none C:/Users/MG/Desktop/last_update/systolic/pe_mod.sv
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+-- Compiling module pe
+
+Top level modules:
+	pe
+
+} {} {}} C:/Users/MG/Desktop/last_update/systolic/vec_mod.sv {1 {vlog -work work -vopt -sv -stats=none C:/Users/MG/Desktop/last_update/systolic/vec_mod.sv
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+-- Compiling module systolic_vector
+
+Top level modules:
+	systolic_vector
+
+} {} {}} {C:/Users/MG/Desktop/last_update/weight_input array/input_buffer.sv} {1 {vlog -work work -vopt -sv -stats=none {C:/Users/MG/Desktop/last_update/weight_input array/input_buffer.sv}
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+-- Compiling module input_buffer
+
+Top level modules:
+	input_buffer
+
+} {} {}} C:/Users/MG/Desktop/last_update/pooling/pooling_control.sv {1 {vlog -work work -vopt -sv -stats=none C:/Users/MG/Desktop/last_update/pooling/pooling_control.sv
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+-- Compiling module pooling_control
+
+Top level modules:
+	pooling_control
+
+} {} {}} C:/Users/MG/Desktop/last_update/systolic/systolic_array.sv {1 {vlog -work work -vopt -sv -stats=none C:/Users/MG/Desktop/last_update/systolic/systolic_array.sv
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+-- Compiling module systolic_array
+
+Top level modules:
+	systolic_array
+
+} {} {}} C:/Users/MG/Desktop/last_update/pooling/pool_top.sv {1 {vlog -work work -vopt -sv -stats=none C:/Users/MG/Desktop/last_update/pooling/pool_top.sv
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+-- Compiling module pooling_top
+
+Top level modules:
+	pooling_top
+
+} {} {}} {C:/Users/MG/Desktop/last_update/weight_input array/weight_array.sv} {1 {vlog -work work -vopt -sv -stats=none {C:/Users/MG/Desktop/last_update/weight_input array/weight_array.sv}
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+-- Compiling module weight_array
+
+Top level modules:
+	weight_array
+
+} {} {}} C:/Users/MG/Desktop/last_update/systolic/systolic_top.sv {1 {vlog -work work -vopt -sv -stats=none C:/Users/MG/Desktop/last_update/systolic/systolic_top.sv
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+-- Compiling module systolic_top
+
+Top level modules:
+	systolic_top
+
+} {} {}} {C:/Users/MG/Desktop/last_update/mapping/flag counter.sv} {1 {vlog -work work -vopt -sv -stats=none {C:/Users/MG/Desktop/last_update/mapping/flag counter.sv}
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+-- Compiling module flag_counter
+
+Top level modules:
+	flag_counter
+
+} {} {}} {C:/Users/MG/Desktop/last_update/weight_input array/weight_buffer.sv} {1 {vlog -work work -vopt -sv -stats=none {C:/Users/MG/Desktop/last_update/weight_input array/weight_buffer.sv}
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+-- Compiling module weight_buffer
+
+Top level modules:
+	weight_buffer
+
+} {} {}} C:/Users/MG/Desktop/last_update/pooling/max_avg_module.sv {1 {vlog -work work -vopt -sv -stats=none C:/Users/MG/Desktop/last_update/pooling/max_avg_module.sv
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+-- Compiling module max_avg_pooling
+
+Top level modules:
+	max_avg_pooling
+
+} {} {}} C:/Users/MG/Desktop/last_update/pooling/pipo_pool.sv {1 {vlog -work work -vopt -sv -stats=none C:/Users/MG/Desktop/last_update/pooling/pipo_pool.sv
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+-- Compiling module PIPO_pool
+
+Top level modules:
+	PIPO_pool
+
+} {} {}}

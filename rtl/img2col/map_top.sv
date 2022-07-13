@@ -5,15 +5,15 @@ module map_top #(
             address_num = 5,
             reg_num     = 20
 ) (
-  input logic  clk,nrst,flag,
+  input logic  clk,nrst,
   input logic  start,
   input logic  [data_width-1:0]  new1, new2,                            //data comes from AXI
-  output logic map_finish,
+  output logic map_finish,flag,
   output logic [data_width-1:0]  out [weight_size-1:0],
 output logic [63:0] col_num
 );
-logic [5:0] round,PU1_add,row_No;
-logic [5:0]PU_No;
+logic [5:0] round,PU1_add;
+logic [5:0]PU_No,row_No;
 logic  [address_num-1:0] adrs_in1, adrs_in2;
 logic [4:0] hoba;
 logic act;

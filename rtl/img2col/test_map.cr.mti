@@ -1,0 +1,85 @@
+C:/Users/MG/Desktop/last_update/mapping/PIPO.sv {1 {vlog -work work -vopt -sv -stats=none C:/Users/MG/Desktop/last_update/mapping/PIPO.sv
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+-- Compiling module PIPO
+
+Top level modules:
+	PIPO
+
+} {} {}} C:/Users/MG/Desktop/last_update/mapping/PU.sv {1 {vlog -work work -vopt -sv -stats=none C:/Users/MG/Desktop/last_update/mapping/PU.sv
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+-- Compiling module PU1
+
+Top level modules:
+	PU1
+
+} {} {}} C:/Users/MG/Desktop/last_update/mapping/PU_vector.sv {1 {vlog -work work -vopt -sv -stats=none C:/Users/MG/Desktop/last_update/mapping/PU_vector.sv
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+-- Compiling module pus_vector
+
+Top level modules:
+	pus_vector
+
+} {} {}} C:/Users/MG/Desktop/last_update/mapping/PU2.sv {1 {vlog -work work -vopt -sv -stats=none C:/Users/MG/Desktop/last_update/mapping/PU2.sv
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+-- Compiling module PUs
+
+Top level modules:
+	PUs
+
+} {} {}} C:/Users/MG/Desktop/last_update/mapping/regfile2in.sv {1 {vlog -work work -vopt -sv -stats=none C:/Users/MG/Desktop/last_update/mapping/regfile2in.sv
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+-- Compiling module regfile2in
+
+Top level modules:
+	regfile2in
+
+} {} {}} C:/Users/MG/Desktop/last_update/mapping/PUs_Control.sv {1 {vlog -work work -vopt -sv -stats=none C:/Users/MG/Desktop/last_update/mapping/PUs_Control.sv
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+-- Compiling module PUs_control
+
+Top level modules:
+	PUs_control
+
+} {} {}} C:/Users/MG/Desktop/last_update/mapping/map_top.sv {1 {vlog -work work -vopt -sv -stats=none C:/Users/MG/Desktop/last_update/mapping/map_top.sv
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+-- Compiling module map_top
+
+Top level modules:
+	map_top
+
+} {} {}} {C:/Users/MG/Desktop/last_update/mapping/map_top_tb (3).sv} {1 {vlog -work work -vopt -sv -stats=none {C:/Users/MG/Desktop/last_update/mapping/map_top_tb (3).sv}
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+-- Compiling module map_top_tb
+
+Top level modules:
+	map_top_tb
+
+} {} {}} {C:/Users/MG/Desktop/last_update/mapping/flag counter.sv} {1 {vlog -work work -vopt -sv -stats=none {C:/Users/MG/Desktop/last_update/mapping/flag counter.sv}
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+-- Compiling module flag_counter
+
+Top level modules:
+	flag_counter
+
+} {} {}} C:/Users/MG/Desktop/last_update/mapping/refil1in.sv {1 {vlog -work work -vopt -sv -stats=none C:/Users/MG/Desktop/last_update/mapping/refil1in.sv
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+-- Compiling module regfile1in
+
+Top level modules:
+	regfile1in
+
+} {} {}} C:/Users/MG/Desktop/last_update/mapping/Mapping_Control.sv {1 {vlog -work work -vopt -sv -stats=none C:/Users/MG/Desktop/last_update/mapping/Mapping_Control.sv
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+-- Compiling module Map_Control
+
+Top level modules:
+	Map_Control
+
+} {} {}} C:/Users/MG/Desktop/last_update/mapping/pu_control.sv {1 {vlog -work work -vopt -sv -stats=none C:/Users/MG/Desktop/last_update/mapping/pu_control.sv
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+-- Compiling module PU_control
+
+Top level modules:
+	PU_control
+
+} {} {}}

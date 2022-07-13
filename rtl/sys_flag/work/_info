@@ -1,0 +1,472 @@
+m255
+K4
+z2
+!s11f vlog 2020.4 2020.10, Oct 13 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/Users/MG/Desktop/last_update
+T_opt
+!s110 1656169017
+VF<=z=N?NHO:QE6PPIzNFC1
+04 11 4 work sys_flag_tb fast 0
+=1-a4bb6d1601f4-62b72238-187-3e14
+o-quiet -auto_acc_if_foreign -work work +acc
+Z0 tCvgOpt 0
+n@_opt
+OL;O;2020.4;71
+vconv_ctrl
+Z1 DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
+!s110 1656144495
+!i10b 1
+!s100 M02>OPWC5A5<kFlfMg::?1
+Z2 !s11b Dg1SIo80bB@j0V0VzS_@n1
+IEWNBXc>i]bP0_27mA=>Z;1
+S1
+Z3 dC:/Users/MG/Desktop/last_update/sys_flag
+w1656144480
+8C:/Users/MG/Desktop/last_update/systolic/conv_ctrl.sv
+FC:/Users/MG/Desktop/last_update/systolic/conv_ctrl.sv
+!i122 69
+L0 1 106
+Z4 VDg1SIo80bB@j0V0VzS_@n1
+Z5 OL;L;2020.4;71
+r1
+!s85 0
+31
+!s108 1656144495.000000
+!s107 C:/Users/MG/Desktop/last_update/systolic/conv_ctrl.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|C:/Users/MG/Desktop/last_update/systolic/conv_ctrl.sv|
+!i113 0
+Z6 o-work work -sv -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R0
+vflag_counter
+R1
+Z7 !s110 1656140686
+!i10b 1
+!s100 5U<aO1L7^kDeagfaO2g;E3
+R2
+IP88XZH4BAOoze;9:SmcM81
+S1
+R3
+w1652905117
+8C:/Users/MG/Desktop/last_update/mapping/flag counter.sv
+FC:/Users/MG/Desktop/last_update/mapping/flag counter.sv
+!i122 59
+L0 1 80
+R4
+R5
+r1
+!s85 0
+31
+Z8 !s108 1656140686.000000
+!s107 C:/Users/MG/Desktop/last_update/mapping/flag counter.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|C:/Users/MG/Desktop/last_update/mapping/flag counter.sv|
+!i113 0
+R6
+R0
+vinput_array
+R1
+Z9 !s110 1656140685
+!i10b 1
+!s100 hc]a^67cjgYO]mh5m:LfO1
+R2
+IGJaP2hWa_=Ac6EELaJmUS0
+S1
+R3
+w1653147824
+8C:/Users/MG/Desktop/last_update/weight_input array/input_array.sv
+FC:/Users/MG/Desktop/last_update/weight_input array/input_array.sv
+!i122 55
+L0 1 30
+R4
+R5
+r1
+!s85 0
+31
+Z10 !s108 1656140685.000000
+!s107 C:/Users/MG/Desktop/last_update/weight_input array/input_array.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|C:/Users/MG/Desktop/last_update/weight_input array/input_array.sv|
+!i113 0
+R6
+R0
+vinput_buffer
+R1
+R9
+!i10b 1
+!s100 e4@BX]mcfEh3>OQ=4W;Hd2
+R2
+I5D:nTHISLz3So4f;P7J;B2
+S1
+R3
+w1649026393
+8C:/Users/MG/Desktop/last_update/weight_input array/input_buffer.sv
+FC:/Users/MG/Desktop/last_update/weight_input array/input_buffer.sv
+!i122 56
+L0 1 66
+R4
+R5
+r1
+!s85 0
+31
+R10
+!s107 C:/Users/MG/Desktop/last_update/weight_input array/input_buffer.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|C:/Users/MG/Desktop/last_update/weight_input array/input_buffer.sv|
+!i113 0
+R6
+R0
+vmax_avg_pooling
+R1
+R7
+!i10b 1
+!s100 KYgT^4YY>d6NU=LN2156>0
+R2
+I9SGQho8?_:aS@z<no7=H80
+S1
+R3
+w1651063955
+8C:/Users/MG/Desktop/last_update/pooling/max_avg_module.sv
+FC:/Users/MG/Desktop/last_update/pooling/max_avg_module.sv
+!i122 60
+L0 1 33
+R4
+R5
+r1
+!s85 0
+31
+R8
+!s107 C:/Users/MG/Desktop/last_update/pooling/max_avg_module.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|C:/Users/MG/Desktop/last_update/pooling/max_avg_module.sv|
+!i113 0
+R6
+R0
+vpe
+R1
+!s110 1656140684
+!i10b 1
+!s100 o8cfO?Zmf;Q=8ze2i>D=_0
+R2
+IF0m8Vjg13RaCJHgoKL9JB0
+S1
+R3
+w1652470889
+8C:/Users/MG/Desktop/last_update/systolic/pe_mod.sv
+FC:/Users/MG/Desktop/last_update/systolic/pe_mod.sv
+!i122 51
+Z11 L0 1 40
+R4
+R5
+r1
+!s85 0
+31
+Z12 !s108 1656140684.000000
+!s107 C:/Users/MG/Desktop/last_update/systolic/pe_mod.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|C:/Users/MG/Desktop/last_update/systolic/pe_mod.sv|
+!i113 0
+R6
+R0
+vPIPO_pool
+R1
+R7
+!i10b 1
+!s100 7=H:fLDOAZIii^Ve>:>3O3
+R2
+IZcKoJ0e=TB18KMXYL_5:?1
+S1
+R3
+w1652778384
+8C:/Users/MG/Desktop/last_update/pooling/pipo_pool.sv
+FC:/Users/MG/Desktop/last_update/pooling/pipo_pool.sv
+!i122 61
+L0 1 24
+R4
+R5
+r1
+!s85 0
+31
+R8
+!s107 C:/Users/MG/Desktop/last_update/pooling/pipo_pool.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|C:/Users/MG/Desktop/last_update/pooling/pipo_pool.sv|
+!i113 0
+R6
+R0
+n@p@i@p@o_pool
+vpooling_control
+R1
+Z13 !s110 1656140687
+!i10b 1
+!s100 ;ga9ODz?flhhMF1TiFE[L3
+R2
+InK^7^;^b1kbmPTa>[DSik2
+S1
+R3
+w1651073021
+8C:/Users/MG/Desktop/last_update/pooling/pooling_control.sv
+FC:/Users/MG/Desktop/last_update/pooling/pooling_control.sv
+!i122 63
+L0 1 180
+R4
+R5
+r1
+!s85 0
+31
+Z14 !s108 1656140687.000000
+!s107 C:/Users/MG/Desktop/last_update/pooling/pooling_control.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|C:/Users/MG/Desktop/last_update/pooling/pooling_control.sv|
+!i113 0
+R6
+R0
+vpooling_pipline
+R1
+R13
+!i10b 1
+!s100 gi[EAS^_3=M[GFXUZoBZz1
+R2
+I?:ZAbK9DjJPVSXd>G23Af0
+S1
+R3
+w1651064003
+8C:/Users/MG/Desktop/last_update/pooling/pooling_pipeline.sv
+FC:/Users/MG/Desktop/last_update/pooling/pooling_pipeline.sv
+!i122 64
+L0 1 44
+R4
+R5
+r1
+!s85 0
+31
+R14
+!s107 C:/Users/MG/Desktop/last_update/pooling/pooling_pipeline.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|C:/Users/MG/Desktop/last_update/pooling/pooling_pipeline.sv|
+!i113 0
+R6
+R0
+vpooling_top
+R1
+R13
+!i10b 1
+!s100 mYFh]?o=LkoV2i9zi2eYi3
+R2
+I=1=nEUiEkK`;??[821WTH2
+S1
+R3
+w1653851990
+8C:/Users/MG/Desktop/last_update/pooling/pool_top.sv
+FC:/Users/MG/Desktop/last_update/pooling/pool_top.sv
+!i122 62
+L0 1 105
+R4
+R5
+r1
+!s85 0
+31
+R8
+!s107 C:/Users/MG/Desktop/last_update/pooling/pool_top.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|C:/Users/MG/Desktop/last_update/pooling/pool_top.sv|
+!i113 0
+R6
+R0
+vregfilePooling
+R1
+R13
+!i10b 1
+!s100 Lzh:ZBY[4oRgVhXSK<NMZ1
+R2
+Ih<Vz3ZCn_`AUg`N`1mQ[<3
+S1
+R3
+w1652626976
+8C:/Users/MG/Desktop/last_update/pooling/regfile.sv
+FC:/Users/MG/Desktop/last_update/pooling/regfile.sv
+!i122 65
+L0 1 38
+R4
+R5
+r1
+!s85 0
+31
+R14
+!s107 C:/Users/MG/Desktop/last_update/pooling/regfile.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|C:/Users/MG/Desktop/last_update/pooling/regfile.sv|
+!i113 0
+R6
+R0
+nregfile@pooling
+vsys_flag
+R1
+!s110 1656169011
+!i10b 1
+!s100 RK7M5hGe<HSSg7QQQ3U[P3
+R2
+I4i[BY]96[Q^>jgZIY;?Lm3
+S1
+R3
+w1656169000
+8C:/Users/MG/Desktop/last_update/sys_flag/sys_flag.sv
+FC:/Users/MG/Desktop/last_update/sys_flag/sys_flag.sv
+!i122 74
+L0 1 35
+R4
+R5
+r1
+!s85 0
+31
+!s108 1656169011.000000
+!s107 C:/Users/MG/Desktop/last_update/sys_flag/sys_flag.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|C:/Users/MG/Desktop/last_update/sys_flag/sys_flag.sv|
+!i113 0
+R6
+R0
+vsys_flag_tb
+R1
+!s110 1656168988
+!i10b 1
+!s100 YzlXz=iDO[Hb?IReeY5^W3
+R2
+I8QKOF@?4mb1F>Y<I1e9<>3
+S1
+R3
+w1656168974
+8C:/Users/MG/Desktop/last_update/sys_flag/sys_flag_tb.sv
+FC:/Users/MG/Desktop/last_update/sys_flag/sys_flag_tb.sv
+!i122 73
+L0 1 152
+R4
+R5
+r1
+!s85 0
+31
+!s108 1656168988.000000
+!s107 C:/Users/MG/Desktop/last_update/sys_flag/sys_flag_tb.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|C:/Users/MG/Desktop/last_update/sys_flag/sys_flag_tb.sv|
+!i113 0
+R6
+R0
+vsystolic_array
+R1
+R9
+!i10b 1
+!s100 0C08HBC:?C4d?Qg5=j<Z`1
+R2
+ILRo8?7DZkzdkXSe0:=Nkz1
+S1
+R3
+w1652368362
+8C:/Users/MG/Desktop/last_update/systolic/systolic_array.sv
+FC:/Users/MG/Desktop/last_update/systolic/systolic_array.sv
+!i122 52
+L0 1 41
+R4
+R5
+r1
+!s85 0
+31
+R12
+!s107 C:/Users/MG/Desktop/last_update/systolic/systolic_array.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|C:/Users/MG/Desktop/last_update/systolic/systolic_array.sv|
+!i113 0
+R6
+R0
+vsystolic_top
+R1
+R9
+!i10b 1
+!s100 F`^[aLbZF=cLfKBLTR?2F0
+R2
+I5N6j74Qjli5[]fh=_Fn5?2
+S1
+R3
+w1653147761
+8C:/Users/MG/Desktop/last_update/systolic/systolic_top.sv
+FC:/Users/MG/Desktop/last_update/systolic/systolic_top.sv
+!i122 53
+R11
+R4
+R5
+r1
+!s85 0
+31
+R10
+!s107 C:/Users/MG/Desktop/last_update/systolic/systolic_top.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|C:/Users/MG/Desktop/last_update/systolic/systolic_top.sv|
+!i113 0
+R6
+R0
+vsystolic_vector
+R1
+R9
+!i10b 1
+!s100 6>z>FI7_DATe^Dn2ecLfI1
+R2
+IR]6?VlzF5QBe:jQacTKMi0
+S1
+R3
+w1653147766
+8C:/Users/MG/Desktop/last_update/systolic/vec_mod.sv
+FC:/Users/MG/Desktop/last_update/systolic/vec_mod.sv
+!i122 54
+L0 1 36
+R4
+R5
+r1
+!s85 0
+31
+R10
+!s107 C:/Users/MG/Desktop/last_update/systolic/vec_mod.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|C:/Users/MG/Desktop/last_update/systolic/vec_mod.sv|
+!i113 0
+R6
+R0
+vweight_array
+R1
+R9
+!i10b 1
+!s100 MHg7]OTBQNXfAV@2_8mOA3
+R2
+I<[1[QJW3?U2[L5NT_OUfG0
+S1
+R3
+w1652000898
+8C:/Users/MG/Desktop/last_update/weight_input array/weight_array.sv
+FC:/Users/MG/Desktop/last_update/weight_input array/weight_array.sv
+!i122 57
+L0 1 27
+R4
+R5
+r1
+!s85 0
+31
+R10
+!s107 C:/Users/MG/Desktop/last_update/weight_input array/weight_array.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|C:/Users/MG/Desktop/last_update/weight_input array/weight_array.sv|
+!i113 0
+R6
+R0
+vweight_buffer
+R1
+R7
+!i10b 1
+!s100 mITA2mgPLjfbYSG]LQjTA2
+R2
+IciAMnWUMcH]lN^zJ2gOj31
+S1
+R3
+w1652508270
+8C:/Users/MG/Desktop/last_update/weight_input array/weight_buffer.sv
+FC:/Users/MG/Desktop/last_update/weight_input array/weight_buffer.sv
+!i122 58
+L0 1 72
+R4
+R5
+r1
+!s85 0
+31
+R8
+!s107 C:/Users/MG/Desktop/last_update/weight_input array/weight_buffer.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|C:/Users/MG/Desktop/last_update/weight_input array/weight_buffer.sv|
+!i113 0
+R6
+R0

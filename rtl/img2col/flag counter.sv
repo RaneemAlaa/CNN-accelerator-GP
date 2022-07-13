@@ -14,7 +14,7 @@ module flag_counter #(
                     count_to_27 = 2'b11 }current_state,next_state;
 
     always_ff @(posedge clk or negedge nrst) begin
-        if (!nrst||map_finish) begin
+        if (!nrst) begin
             current_count<=0;
             current_state<=idle;
         end else begin
@@ -37,7 +37,7 @@ module flag_counter #(
                 count_to_159:
                     begin
                         flag=0;
-                        if (current_count==159) begin
+                        if (current_count==160) begin
                             next_state=count_to_3;
                             next_count=0;
                         end 
