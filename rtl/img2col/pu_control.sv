@@ -68,14 +68,14 @@ end
               next_state = write_r;
               if(round == 0) 
                begin
-                assign neighbour_out = {out_g[4:1], out_g[9:6], out_g[14:11], out_g[19:16], out_g[24:21]}; //kant 14
-                assign out = {out_g};
+                neighbour_out = {out_g[4:1], out_g[9:6], out_g[14:11], out_g[19:16], out_g[24:21]}; //kant 14
+                out = {out_g};
                
                end
               else 
                begin 
-                assign neighbour_out = {out_g[24:21],neighbour_out_zeros};
-                assign out = {out_g[24:20],out_r };
+                neighbour_out = {out_g[24:21],neighbour_out_zeros};
+                out = {out_g[24:20],out_r };
                end
           end 
 	
@@ -87,9 +87,9 @@ end
                neighbour_out_flag = 0;
               next_state = write_g;
               if(round==0)
-                assign in_r = out_g[24:5];
+                 in_r = out_g[24:5];
               else //if(round==1)
-                assign in_r = {out_g[24:20],out_r[19:5]};
+                 in_r = {out_g[24:20],out_r[19:5]};
 	 
               //else if(round==2)
               //  assign in_r = {out_r[19:16],out_r[15:12],out_r[11:8],out_r[3:0],out_g[24:21]};

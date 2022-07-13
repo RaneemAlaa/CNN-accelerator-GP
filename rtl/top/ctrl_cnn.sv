@@ -13,9 +13,9 @@ module ctrl_cnn(
   enum logic [2:0] { idle             = 3'b000,
                      conv             = 3'b001,
                      FC               = 3'b011,
-		             		 conv_pooling     = 3'b010,
-	                   conv_pooling_FC  = 3'b110,
-		                 out              = 3'b111 } next_state,current_state;
+		             conv_pooling     = 3'b010,
+	                 conv_pooling_FC  = 3'b110,
+		             out              = 3'b111 } next_state,current_state;
 
   enum logic [1:0]{ loading_weight_element = 2'b10,
                     loading_weight_filter  = 2'b11,
@@ -33,10 +33,10 @@ module ctrl_cnn(
 	  if(!nrst) 
     	begin  
       		current_state      <= idle;
-	    		current_count_img  <= 0;
+	    	current_count_img  <= 0;
       		current_count_conv <= 0;
       		current_i          <= 0;
-	    		current_state_2    <= loading_weight_element;  
+	    	current_state_2    <= loading_weight_element;  
       		current_i          <= 0;
       		current_N          <= 0;
     	end
@@ -46,7 +46,7 @@ module ctrl_cnn(
       		current_count_img  <= next_count_img;
       		current_count_conv <= next_count_conv;
       		current_i          <= next_i;
-	    		current_state_2    <= next_state_2;
+	    	current_state_2    <= next_state_2;
       		current_N          <= next_N ;
       		current_i          <= next_i;
     	end 
@@ -64,13 +64,12 @@ module ctrl_cnn(
     	unique case(current_state) 
 			idle:
       		begin 
-      			fifo_en = 0;
-      			nrst2 	= 0;
+      			fifo_en 	 = 0;
+      			nrst2 	     = 0;
       			pooling_ctrl = 0;
-     				pu_en        = 0;
+     			pu_en        = 0;
         		conv_ctrl    = 0;
-        		fifo_en 		 = 0;
-        		weight_en    = 32'h0000_0000;
+        		weight_en    = 32'h00000000;
         		unique case(op_code_i[2:0])
 		  			3'b000:next_state = idle; 
           			3'b001:next_state = conv;
@@ -85,20 +84,22 @@ module ctrl_cnn(
 		  	begin                             //filter buffering
        			if (next_i < num_filter) // to make first buffer for filter on 
        			begin 
-					pu_en = 0;
-					conv_ctrl=0;
+					pu_en 		 = 0;
+					conv_ctrl	 = 0;
 					pooling_ctrl = 0;
+					nrst2        = 0;
+					fifo_en	     = 0;
 					unique case(current_state_2) 
   				  		loading_weight_element:
   						begin 
-							next_state         = conv;
+							next_state 		   = conv;
   							weight_en [next_i] = 1;
  						  	if( next_i != 0)
          					begin 
           						weight_en[next_i-1] = 0; 
          					end
 
-             				next_N       = current_N + 1;               //AXI sends 2 elements per clk 
+             				next_N = current_N + 1;               //AXI sends 2 elements per clk 
        						if(next_N <= weight_dim)         // no of element 
        						begin
                 				next_state_2 = loading_weight_element;
@@ -126,46 +127,49 @@ module ctrl_cnn(
           			endcase    
      			end 
               //image buffering
-					else 
+				else 
+				begin
+				    nrst2          = 1;
+				    pu_en 		   = 1;
+					fifo_en	       = 0;
+					pooling_ctrl   = 0;
+	          		weight_en      = 32'h00000000;
+					conv_ctrl	   = 0;	
+	          		next_state     = conv;
+				    next_count_img = current_count_img + 1;	
+					if (next_count_img > 11'd165)			//(4*32+5)  to know when 1st output would be ready
 					begin
-				    	nrst2				   = 1;
-				    	pu_en          = 1;
-							fifo_en	       = 0;
-							pooling_ctrl   = 0;
-	          	weight_en      = 32'h0000_0000;
-							conv_ctrl	   = 0;	
-	          	next_state     = conv;
-				    	next_count_img = current_count_img + 1;	
-					  	if (next_count_img > 11'd165)			//(4*32+5)  to know when 1st output would be ready
-					  	begin
-					  				fifo_en    = 1;
-	            			conv_ctrl  = 1;
-	            			weight_en  = 32'h0000_0000;
-										if (next_count_img > 11'd1025)	
-													pu_en      = 0;
-										if (next_count_img > 11'd2000)	
-										    	next_state = out ;
+					  	fifo_en    = 1;
+	            		conv_ctrl  = 1;
+	            		weight_en  = 32'h00000000;
+						if (next_count_img > 11'd1025)	
+							pu_en      = 0;
+						if (next_count_img > 11'd2000)	
+							next_state = out ;
 			        end
-					end
+				end
 		  	end 
  
 		  	FC: 
 		  	begin 
         	next_state = out;
-			 		pu_en = 0;
-					conv_ctrl  = 0;
-					pooling_ctrl = 0;
-					fifo_en = 0;
+			nrst2  = 0;
+			pu_en = 0;
+			conv_ctrl  = 0;
+			pooling_ctrl = 0;
+			fifo_en = 0;
 
       		end
 
       		conv_pooling:
 		  	begin                             //filter buffering
-       			if (next_i < num_filter) // to make first buffer for filter on 
-       			begin 
-					pu_en = 0;
-					conv_ctrl=0;
-					pooling_ctrl = conv_finish;
+       		if (next_i < num_filter) // to make first buffer for filter on 
+       		begin 
+				pu_en = 0;
+				conv_ctrl=0;
+				pooling_ctrl = conv_finish;
+				nrst2        = 0;
+				fifo_en	     = 0;
 					unique case(current_state_2) 
   				  		loading_weight_element:
   						begin 
@@ -207,24 +211,24 @@ module ctrl_cnn(
             //image buffering
 				else                           
 				begin
-								nrst2				   = 1;
-					    	pu_en          = 1;
-								fifo_en	       = 0;
-								pooling_ctrl   = conv_finish;
+					nrst2				   = 1;
+					pu_en          = 1;
+					fifo_en	       = 0;
+					pooling_ctrl   = conv_finish;
 		          	weight_en      = 32'h0000_0000;
-								conv_ctrl	   = 0;	
-		      			next_count_img = current_count_img + 1;
+					conv_ctrl	   = 0;	
+		      		next_count_img = current_count_img + 1;
           			next_state     = conv_pooling;
           			if (next_count_img > 11'd165)			//(4*32+5)  to know when 1st output would be ready
-					  		begin
-					  				fifo_en    = 1;
-	            			conv_ctrl  = 1;
-	            			pooling_ctrl = conv_finish;
-	            			weight_en  = 32'h0000_0000;
-										if (next_count_img > 11'd1025)	
-													pu_en      = 0;
-										if (next_count_img > 11'd2000)	
-										    	next_state = out ;
+					begin
+						fifo_en    = 1;
+	            		conv_ctrl  = 1;
+	            		pooling_ctrl = conv_finish;
+	            		weight_en  = 32'h0000_0000;
+						if (next_count_img > 11'd1025)	
+							pu_en      = 0;
+						if (next_count_img > 11'd2000)	
+							next_state = out ;
 			        	end
 
 

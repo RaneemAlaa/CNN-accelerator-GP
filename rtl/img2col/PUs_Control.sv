@@ -81,8 +81,8 @@ end
 		//out_n={out_n[19:17],0,out_n[15:13],0,out_n[11:9],out_g[2],out_n[7:5],out_g[3],out_n[3:1],out_g[4]}
                if(round == 0||((round==1)&&(PU_No==0)))  
                  begin
-		assign out = {out_g[4],out_n[3:0],out_g[3],out_n[7:4],out_g[2],out_n[11:8],out_g[1],out_n[15:12],out_g[0],out_n[19:16]};
-               assign neighbour_out = {out_g[0],out_n[19:17],out_g[1],out_n[15:13],out_g[2],out_n[11:9],out_g[3],out_n[7:5],out_g[4],out_n[3:1]};
+		 out = {out_g[4],out_n[3:0],out_g[3],out_n[7:4],out_g[2],out_n[11:8],out_g[1],out_n[15:12],out_g[0],out_n[19:16]};
+          neighbour_out = {out_g[0],out_n[19:17],out_g[1],out_n[15:13],out_g[2],out_n[11:9],out_g[3],out_n[7:5],out_g[4],out_n[3:1]};
 		end
 //  if(PU_No_m == 1)
 		
@@ -95,10 +95,10 @@ end
                //end
               else 
 		begin
-		assign out = {out_g[4],out_n[19:16],out_r};
+		 out = {out_g[4],out_n[19:16],out_r};
                //if(PU_No_m == 1)  
 		//assign neighbour_out_zeros= '{default:16'h0000} ; {16{1'b0}}
-                assign neighbour_out = {out_g[4],out_n[19:17], 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0  }; 
+                 neighbour_out = {out_g[4],out_n[19:17], 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0  }; 
                // else if(PU_No_m == 2) 
 		//assign neighbour_out = {out_n[19:18],out_n[16],out_g[4], 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0  }; 
 		//else if(PU_No_m == 3) 
@@ -135,10 +135,10 @@ end
                neighbour_out_flag=0;
               next_state = prepare_n;
               if(round==0||((round==1)&&(PU_No==0)))
-          assign in_r = {out_g[4],out_n[3:0],out_g[3],out_n[7:4],out_g[2],out_n[11:8],out_g[1],out_n[15:12]};
+           in_r = {out_g[4],out_n[3:0],out_g[3],out_n[7:4],out_g[2],out_n[11:8],out_g[1],out_n[15:12]};
            
 	    else //if(round==1)
-              assign in_r = {out_g[4],out_n[19:16],out_g[3],out_r[18:15],out_g[2],out_r[13:10],out_g[1],out_r[8:5]};             
+               in_r = {out_g[4],out_n[19:16],out_g[3],out_r[18:15],out_g[2],out_r[13:10],out_g[1],out_r[8:5]};             
 	 
 	   //else if(round==2)
            //    assign in_r = {out_r[19:16],out_r[15:12],out_r[11:8],out_r[3:0],out_n[19:16]};

@@ -10,10 +10,10 @@ module weight_buffer #(
   output logic  pe_en                      //!control the systolic to enable or disenable for taking the weight 
 );
 
-logic [223:0] store;      //!15 elements * 16 bits = 224
-logic [7:0] bit_count, next_bit_count; //! number of bits stored in FIFO
-logic [7:0] in_idx;       //!input pointer
-logic [7:0] out_idx;      //!output pointer
+logic [415:0] store;      //!15 elements * 16 bits = 224 >>>>> 13 element * 32 bits = 416
+logic [9:0] bit_count, next_bit_count; //! number of bits stored in FIFO
+logic [9:0] in_idx;       //!input pointer
+logic [9:0] out_idx;      //!output pointer
 logic [4:0] next_element_count, current_element_count;  //! number of elements stored in FIFO
 
 always_ff @(posedge clk, negedge nrst) begin
@@ -36,7 +36,7 @@ always_ff @(posedge clk, negedge nrst) begin
 
       store[ in_idx +: 32] <= data_in;      //store 2 elements
       in_idx <= (in_idx + 32);
-      if (in_idx == 192)                  //223-32
+      if (in_idx == 384)                  //223-32 >> 416-32
       begin
         in_idx <= 0;  
       end
@@ -46,11 +46,11 @@ always_ff @(posedge clk, negedge nrst) begin
     begin
       out_idx <= (out_idx + 16);
       next_element_count <= current_element_count + 1;
-      if (out_idx == 208)               //223-16
+      if (out_idx == 400)               //223-16 >> 416 -16
       begin
         out_idx <= 0;  
       end
-      pe_en = (next_element_count == weight_dim)? 0 : 1;
+      pe_en = (next_element_count >= (weight_dim/2 +1))? 0 : 1;  // count increase each 2 clock cycle 
     end
   end
 end
@@ -69,98 +69,4 @@ end
 
 assign data_out = store[ out_idx +: 16 ] ;
   
-
-  
-initial
-$monitor("weight_buffer:::bit_count=%d  bit_count=%d  data_in=%h store=%h,in_idx=%b  ,out_idx=%b data_out=%h , out_vld=%b",bit_count,next_bit_count,data_in,store,in_idx,out_idx,data_out,out_vld);
-  
-endmodule
-
-
-
-module weight_buffer_test;
-
-	parameter data_width = 16;
-	`define delay 10
-
-   reg  clk, nrst, fifo_en;
-   reg  [4:0] weight_dim;
-   reg  [31:0] data_in;        //from AXI
-   wire  [data_width-1:0] data_out;
-   wire  out_vld,pe_en;
-
-
-weight_buffer inst(.clk(clk),
-		   .nrst(nrst),
-		   .fifo_en(fifo_en),
-		   .weight_dim(weight_dim),
-		   .data_in(data_in),
-		   .data_out(data_out),
-		   .out_vld(out_vld),
-		   .pe_en(pe_en)
-		   );
-
-	initial clk = 1;
-	always #`delay clk = ~clk;
-
-
-	initial
-	begin
-	
-	//rst
-	nrst=1'b0;
-
-	
-	//store
-	#(`delay*2)
-	nrst=1'b1;
-	fifo_en=1'b1;
-	data_in=32'h0002_0001;
-
-	
-	#(`delay*2)
-	data_in=32'h0004_0003;
-	
-	#(`delay*2)
-	data_in=32'h0006_0005;
-
-	#(`delay*2)
-	data_in=32'h0008_0007;
-
-	#(`delay*2)
-	data_in=32'h000a_0009;
-
-	#(`delay*2)
-	data_in=32'h000c_000b;
-	
-	#(`delay*2)
-	data_in=32'h000e_000d;
-
-	#(`delay*2)
-	data_in=32'h0010_000f;
-	
-	#(`delay*2)
-	data_in=32'h0030_0020;
-	
-	#(`delay*2)
-	data_in=32'h0050_0040;
-
-	#(`delay*2)
-	data_in=32'h0070_0060;
-
-	#(`delay*2)
-	data_in=32'h0090_0080;
-	
-	
-
-	#(`delay*2)
-	fifo_en=1'b0;
-
-
-	end
-
-
-//initial
-//$monitor("weight_buffer_test::: clk=%d  data_in=%h , data_out=%h , out_vld=%b",clk,data_in,data_out,out_vld);
-
 endmodule
